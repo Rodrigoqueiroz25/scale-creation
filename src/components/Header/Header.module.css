@@ -1,0 +1,16 @@
+.toolbar {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    background-color: #1976d2;
+    color: white;
+    font-weight: 700;
+}
+
+.titulo{
+    padding: 2rem;
+}
