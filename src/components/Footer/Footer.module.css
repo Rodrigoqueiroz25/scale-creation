@@ -1,4 +1,14 @@
 .footer{
+    position: fixed;
+    display: block;
+    width: 100%;
+    bottom: 0;
+    background-color: lightgray;
+    
+}
+
+.content{
+    height: 6rem;
     display: flex;
     flex-direction: row;
     justify-content: center;
