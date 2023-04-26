@@ -1,10 +1,11 @@
 
 import { Link } from 'react-router-dom';
 import styles from './Home.module.css';
+import '../../App.css';
 
 export function Home(){
     return (
-        <div className={styles.home}>
+        <div className="contentFlex">
         
         <h2>Bem Vindo</h2>
 
