@@ -46,7 +46,7 @@ export function SelecaoMes(){
                         onChange={(e : ChangeEvent<HTMLSelectElement>) => setSelectValue(e.target.value)}
                     >
                         {list.map((item, index) => (
-                            <option value={item}>{item}</option>
+                            <option key={index} value={item}>{item}</option>
                         ))}
                     </select>
                 </div>
