@@ -1,0 +1,67 @@
+.App {
+    
+}
+
+.contentFlex{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4rem;
+    margin: 5em auto 2em auto;
+    /* margin: 0 3rem 0 3rem; */
+    margin-top: 6rem;
+    
+    max-width: 100rem;
+    
+}
+
+.cardContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+    gap: 1.5rem;
+}
+
+.card {
+    all: unset;
+    border-radius: 1rem;
+    border: 0.1rem solid #eee;
+    background-color: #fafafa;
+    height: 4rem;
+    width: 20rem;
+    padding: 1.6rem;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+    
+    gap: 0.6rem;
+    cursor: pointer;
+}
+
+.card span{
+    font-size: 1.5rem;
+}
+
+.card:hover {
+    transform: translateY(-0.3rem);
+    box-shadow: 0 0.4rem 1.7rem rgba(0, 0, 0, 0.35);
+    color: #124699;
+}
+
+.card:hover .materialIcons path{
+    fill: black;
+}
+
+.materialIcons {
+    height: 2.4rem;
+    width: auto;
+  
+}
+
+.materialIcons path {
+    fill: #888;
+} 

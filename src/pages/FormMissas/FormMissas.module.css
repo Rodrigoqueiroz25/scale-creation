@@ -1,0 +1,21 @@
+
+.mes {
+    font-size: 4rem;
+    text-align: center;
+    border: 1px solid rgb(144, 142, 142);
+    background-color: #d2e4f3;
+    padding: 2.5rem;
+}
+  
+.semana {
+    font-size: 3rem;
+    text-align: center;
+}
+  
+.cardContainer {
+    /* display: flex; */
+    /* flex-direction: row; */
+    justify-content: flex-start;
+    
+    /* gap: 1.5rem; */
+}

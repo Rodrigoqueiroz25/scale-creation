@@ -1,6 +1,6 @@
 
 import styles from './SelecaoMes.module.css';
-import '../../App.css';
+import stylesApp from '../../App.module.css';
 import { useNavigate } from 'react-router-dom';
 import { ChangeEvent, useState } from 'react';
 
@@ -34,7 +34,7 @@ export function SelecaoMes(){
     }
 
     return (
-        <section className="contentFlex">
+        <section className={stylesApp.contentFlex}>
             <h1>Selecione o mês para criação da escala</h1>
             <form className={styles.form}>
                 <div className={styles.select}>
@@ -50,10 +50,10 @@ export function SelecaoMes(){
                         ))}
                     </select>
                 </div>
-                <div className={styles.cardContainer}>
-                    <button className={styles.card} type="submit" onClick={handleClickButton}>
+                <div className={stylesApp.cardContainer}>
+                    <button className={stylesApp.card} type="submit" onClick={handleClickButton}>
                     <span>Preencher Vagas</span>
-                    <svg className={styles.materialIcons} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                    <svg className={stylesApp.materialIcons} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
                     </button>
                 </div>
             </form>
