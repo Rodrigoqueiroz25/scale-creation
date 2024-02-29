@@ -23,20 +23,6 @@ export function FormMissas() {
                 nameCelebration="Missa Semanal"
                 numVacancies={4}
             />
-            <FormMissa
-                date="02/02/2024"
-                day="Terça-Feira"
-                hour="19:00"
-                nameCelebration="Missa Semanal"
-                numVacancies={4}
-            />
-            <FormMissa
-                date="02/02/2024"
-                day="Terça-Feira"
-                hour="19:00"
-                nameCelebration="Missa Semanal"
-                numVacancies={4}
-            />
             <div className={`${stylesApp.cardContainer}`}>
                 <button
                     className={stylesApp.card}

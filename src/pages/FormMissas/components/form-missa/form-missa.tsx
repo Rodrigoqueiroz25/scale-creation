@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import styles from './style.module.css';
+import { OptionsVacancies } from '../options-vacancies/options-vacancies';
 
 type Props = {
     day: string;
@@ -14,20 +15,12 @@ export function FormMissa({ date, day, hour, nameCelebration, numVacancies }: Pr
 
     const [celebration, setCelebration] = useState(nameCelebration);
 
-    const renderSelects = () => {
-        const selects = [];
-        for (let index = 0; index < numVacancies; index++) {
-            selects.push(<select name='tes'><option value={index}>{index}</option></select>)
-        }
-        return selects;
-    }
-
     return (
         <div className={styles.container}>
             <span>{day}</span>
             <span>{date}</span>
             <span>{hour} horas</span>
-            <div className={styles.selects}>{renderSelects()}</div>
+            <OptionsVacancies numVacancies={numVacancies}/>
             <div className={styles.celebration}>
                 <label htmlFor="celebration">Celebração: </label>
                 <input 
