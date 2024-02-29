@@ -7,7 +7,7 @@ import { ChangeEvent, useState } from 'react';
 
 export function SelecaoMes(){
 
-    const [selectValue, setSelectValue] = useState('');
+    const [monthSelected, setMonthSelected] = useState('Janeiro');
     const list = [
         "Janeiro",
         "Fevereiro",
@@ -28,7 +28,7 @@ export function SelecaoMes(){
     function handleClickButton(){
         navigate('/form-missas',{
             state: {
-                mes: selectValue
+                mes: monthSelected
             }
         });
     }
@@ -42,8 +42,8 @@ export function SelecaoMes(){
                     <select 
                         name="selecaoMes" 
                         id="selecaoMes" 
-                        value={selectValue} 
-                        onChange={(e : ChangeEvent<HTMLSelectElement>) => setSelectValue(e.target.value)}
+                        value={monthSelected} 
+                        onChange={(e : ChangeEvent<HTMLSelectElement>) => setMonthSelected(e.target.value)}
                     >
                         {list.map((item, index) => (
                             <option key={index} value={item}>{item}</option>

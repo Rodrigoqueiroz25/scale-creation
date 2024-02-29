@@ -1,0 +1,25 @@
+{
+  "lockfile_version": "1",
+  "packages": {
+    "nodejs@18.16.0": {
+      "last_modified": "2023-05-21T19:52:09Z",
+      "resolved": "github:NixOS/nixpkgs/9356eead97d8d16956b0226d78f76bd66e06cb60#nodejs",
+      "source": "devbox-search",
+      "version": "18.16.0",
+      "systems": {
+        "aarch64-darwin": {
+          "store_path": "/nix/store/mfrzb46340qzyzf0laa24y0xg06xsif9-nodejs-18.16.0"
+        },
+        "aarch64-linux": {
+          "store_path": "/nix/store/ik3qmf89kcrcgnlvl5nbb95xyrh0qkh5-nodejs-18.16.0"
+        },
+        "x86_64-darwin": {
+          "store_path": "/nix/store/4d4sar5gv82d7wn96lq1ddxq3vxfh7h1-nodejs-18.16.0"
+        },
+        "x86_64-linux": {
+          "store_path": "/nix/store/hdwy8j1jvj2d68p449vvpf5j4mrgzldi-nodejs-18.16.0"
+        }
+      }
+    }
+  }
+}

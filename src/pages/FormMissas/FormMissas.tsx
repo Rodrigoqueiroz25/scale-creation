@@ -14,11 +14,8 @@ export function FormMissas() {
         <section className={stylesApp.contentFlex}>
             <h1 className={styles.mes}>{mes}</h1>
             <h2 className={styles.semana}>{semana}º Semana</h2>
-            
-            
-            
 
-            <div className={`${stylesApp.cardContainer}`} style={{ justifyContent: "flex-start"}}>
+            <div className={`${stylesApp.cardContainer}`}>
                 <button
                     className={stylesApp.card}
                     type="submit"
