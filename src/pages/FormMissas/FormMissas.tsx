@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import styles from "./FormMissas.module.css";
 import stylesApp from '../../App.module.css';
+import { FormMissa } from "./components/form-missa/form-missa";
 
 export function FormMissas() {
     const location = useLocation();
@@ -15,6 +16,13 @@ export function FormMissas() {
             <h1 className={styles.mes}>{mes}</h1>
             <h2 className={styles.semana}>{semana}º Semana</h2>
 
+            <FormMissa
+                date="02/02/2024"
+                day="Terça-Feira"
+                hour="19:00"
+                nameCelebration="Missa Semanal"
+                numVacancies={4}
+            />
             <div className={`${stylesApp.cardContainer}`}>
                 <button
                     className={stylesApp.card}

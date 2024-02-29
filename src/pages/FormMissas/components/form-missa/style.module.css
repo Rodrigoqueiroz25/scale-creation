@@ -1,0 +1,13 @@
+.container {
+    background-color: aliceblue;
+    /* width: 95%; */
+    /* height: auto; */
+    padding: 2rem 0;
+    /* margin: 1em auto; */
+    font-size: 14px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 4px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
