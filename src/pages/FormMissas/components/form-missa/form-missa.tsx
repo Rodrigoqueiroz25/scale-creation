@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import styles from './style.module.css';
-import { OptionsVacancies } from '../options-vacancies/options-vacancies';
+import { OptionsVacancies } from '../options-vacancies/group-options-vacancies';
 
 type Props = {
     day: string;

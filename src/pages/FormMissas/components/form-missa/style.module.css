@@ -1,8 +1,8 @@
 .container {
     background-color: aliceblue;
-    /* width: 95%; */
     /* height: auto; */
-    padding: 2rem 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     /* margin: 1em auto; */
     font-size: 14px;
     display: flex;
