@@ -12,9 +12,15 @@ export function FormMissas() {
     const [mes] = useState(location.state.mes);
     const [semana, setSemana] = useState(1);
 
-    function handleClick(){
+    function handleClickNextWeek(){
         if(semana < calendar.numberWeeks){
             setSemana(semana + 1);
+        }
+    }
+
+    function handleClickPreviousWeek(){
+        if(semana > 1){
+            setSemana(semana - 1);
         }
     }
 
@@ -40,9 +46,26 @@ export function FormMissas() {
                 <button
                     className={stylesApp.card}
                     type="submit"
-                    onClick={handleClick}
+                    onClick={handleClickNextWeek}
                 >
                     <span>Próxima Semana</span>
+                    <svg
+                        className={stylesApp.materialIcons}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                    >
+                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+                    </svg>
+                </button>
+
+                <button
+                    className={stylesApp.card}
+                    type="submit"
+                    onClick={handleClickPreviousWeek}
+                >
+                    <span>Voltar Semana</span>
                     <svg
                         className={stylesApp.materialIcons}
                         xmlns="http://www.w3.org/2000/svg"
