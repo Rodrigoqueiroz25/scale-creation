@@ -41,11 +41,13 @@ export class MonthlyCalendar {
                 }
             }
             else {
-                let day: Day = {
-                    id: dayMonth,
-                    name: daysWeek[dayWeekId]
+                if(dayWeekId !== 1){
+                    let day: Day = {
+                        id: dayMonth,
+                        name: daysWeek[dayWeekId]
+                    }
+                    week.days.push(day);
                 }
-                week.days.push(day);
             }
 
             if (this.monthEnds(dayMonth)) {
