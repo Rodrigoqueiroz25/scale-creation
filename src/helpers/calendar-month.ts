@@ -55,12 +55,17 @@ export class MonthlyCalendar {
         }
     }
 
-    get weekArray(){
-        return this.weeks;
+    public getWeek(num: number){
+        if(num > 0)
+            return this.weeks[num - 1];
     }
 
     get numMonth(){
         return this.id;
+    }
+
+    get numberWeeks(){
+        return this.numWeeks;
     }
 
    
