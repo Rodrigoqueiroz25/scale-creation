@@ -3,30 +3,44 @@ import { useLocation } from "react-router-dom";
 import styles from "./FormMissas.module.css";
 import stylesApp from '../../App.module.css';
 import { FormMissa } from "./components/form-missa/form-missa";
+import { MonthlyCalendar } from "../../helpers/calendar-month";
 
 export function FormMissas() {
     const location = useLocation();
-    console.log(location.state);
+    const calendar = new MonthlyCalendar(location.state.mes);
 
     const [mes] = useState(location.state.mes);
     const [semana, setSemana] = useState(1);
+
+    function handleClick(){
+        if(semana < calendar.numberWeeks){
+            setSemana(semana + 1);
+        }
+    }
 
     return (
         <section className={stylesApp.contentFlex}>
             <h1 className={styles.mes}>{mes}</h1>
             <h2 className={styles.semana}>{semana}º Semana</h2>
 
-            <FormMissa
-                date="02/02/2024"
-                day="Terça-Feira"
-                hour="19:00"
-                nameCelebration="Missa Semanal"
-                numVacancies={4}
-            />
+            {
+                calendar.getWeek(semana)?.days.map((day, key) => (
+                    <FormMissa
+                        date={`${day.id}/${calendar.numMonth}/2024`}
+                        day={day.name}
+                        hour="19:00"
+                        nameCelebration="Missa Semanal"
+                        numVacancies={4}
+                        key={key}
+                    />
+                ))
+            }
+           
             <div className={`${stylesApp.cardContainer}`}>
                 <button
                     className={stylesApp.card}
                     type="submit"
+                    onClick={handleClick}
                 >
                     <span>Próxima Semana</span>
                     <svg
