@@ -12,7 +12,7 @@ export function OptionsVacancies({ numVacancies }: Props) {
         const selects = [];
         for (let index = 0; index < numVacancies; index++) {
             selects.push(
-                <GroupOptionVacancie listName={['wwddddd', 'eeddddddd', 'rttdddddd']} num={index}/>
+                <GroupOptionVacancie key={index} listName={['wwddddd', 'eeddddddd', 'rttdddddd']} num={index}/>
             )
         }
         return selects;

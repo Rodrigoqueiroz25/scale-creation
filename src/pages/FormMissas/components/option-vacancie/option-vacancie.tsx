@@ -15,7 +15,7 @@ export function GroupOptionVacancie({ listName, num }: Props) {
         <select className={styles.select} onChange={(e) => setNameSelected(e.target.value)}>
             {
                 listName.map((name, key) => (
-                    <option value={name+key+num}>{name}</option>    
+                    <option key={key} value={name+key+num}>{name}</option>    
                 ))
             }
 
