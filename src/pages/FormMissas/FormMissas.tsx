@@ -38,7 +38,7 @@ export function FormMissas() {
                             date={`${day.id}/${calendar.numMonth}/2024`}
                             day={day.name}
                             hour={mass.time}
-                            nameCelebration="Missa Semanal"
+                            nameCelebration={mass.description}
                             numVacancies={mass.numVacancies}
                             key={key}
                         />
