@@ -1,20 +1,20 @@
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './style.module.css';
+import { OptionsFillVacancies } from '../../../../data/options'
 
 type Props = {
-    listName: string[];
     num: number;
 }
 
-export function GroupOptionVacancie({ listName, num }: Props) {
+export function Vacancy({ num }: Props) {
 
     const [nameSelected, setNameSelected] = useState('');
 
     return (
         <select className={styles.select} onChange={(e) => setNameSelected(e.target.value)}>
             {
-                listName.map((name, key) => (
+                OptionsFillVacancies.map((name, key) => (
                     <option key={key} value={name+key+num}>{name}</option>    
                 ))
             }

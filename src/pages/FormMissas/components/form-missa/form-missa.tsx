@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import styles from './style.module.css';
-import { OptionsVacancies } from '../options-vacancies/group-options-vacancies';
+import { GroupVacancies } from '../group-vacancies/group-vacancies';
 
 type Props = {
     day: string;
@@ -20,7 +20,7 @@ export function FormMissa({ date, day, hour, nameCelebration, numVacancies }: Pr
             <span>{day}</span>
             <span>{date}</span>
             <span>{hour} horas</span>
-            <OptionsVacancies numVacancies={numVacancies}/>
+            <GroupVacancies numVacancies={numVacancies}/>
             <div className={styles.celebration}>
                 <label htmlFor="celebration">Celebração: </label>
                 <input 

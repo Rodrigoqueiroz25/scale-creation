@@ -1,18 +1,18 @@
 
-import { GroupOptionVacancie } from '../option-vacancie/option-vacancie';
+import { Vacancy } from '../vacancy/vacancy';
 import styles from './style.module.css';
 
 type Props = {
     numVacancies: number;
 }
 
-export function OptionsVacancies({ numVacancies }: Props) {
+export function GroupVacancies({ numVacancies }: Props) {
 
     const renderSelects = () => {
         const selects = [];
         for (let index = 0; index < numVacancies; index++) {
             selects.push(
-                <GroupOptionVacancie key={index} listName={['wwddddd', 'eeddddddd', 'rttdddddd']} num={index}/>
+                <Vacancy key={index} num={index}/>
             )
         }
         return selects;
