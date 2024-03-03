@@ -4,6 +4,8 @@ import styles from "./FormMissas.module.css";
 import stylesApp from '../../App.module.css';
 import { FormMissa } from "./components/form-missa/form-missa";
 import { MonthlyCalendar } from "../../helpers/calendar-month";
+import { daysMasses } from "../../constants/masses";
+
 
 export function FormMissas() {
     const location = useLocation();
@@ -12,14 +14,14 @@ export function FormMissas() {
     const [mes] = useState(location.state.mes);
     const [semana, setSemana] = useState(1);
 
-    function handleClickNextWeek(){
-        if(semana < calendar.numberWeeks){
+    function handleClickNextWeek() {
+        if (semana < calendar.numberWeeks) {
             setSemana(semana + 1);
         }
     }
 
-    function handleClickPreviousWeek(){
-        if(semana > 1){
+    function handleClickPreviousWeek() {
+        if (semana > 1) {
             setSemana(semana - 1);
         }
     }
@@ -30,18 +32,20 @@ export function FormMissas() {
             <h2 className={styles.semana}>{semana}º Semana</h2>
 
             {
-                calendar.getWeek(semana)?.days.map((day, key) => (
-                    <FormMissa
-                        date={`${day.id}/${calendar.numMonth}/2024`}
-                        day={day.name}
-                        hour="19:00"
-                        nameCelebration="Missa Semanal"
-                        numVacancies={4}
-                        key={key}
-                    />
+                calendar.getWeek(semana)?.days.map((day) => (
+                    daysMasses[day.name].map((mass, key) => (
+                        <FormMissa
+                            date={`${day.id}/${calendar.numMonth}/2024`}
+                            day={day.name}
+                            hour={mass.time}
+                            nameCelebration="Missa Semanal"
+                            numVacancies={mass.numVacancies}
+                            key={key}
+                        />
+                    ))
                 ))
             }
-           
+
             <div className={`${stylesApp.cardContainer}`}>
                 <button
                     className={stylesApp.card}
