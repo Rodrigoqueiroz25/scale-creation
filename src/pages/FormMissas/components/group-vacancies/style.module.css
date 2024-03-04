@@ -3,3 +3,27 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
+
+.container{
+    display: flex;
+    gap: 1rem;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    justify-content: start;
+    gap: 2px;
+}
+
+.buttons>button{
+    background-color: beige;
+    border-color: black;
+    border-radius: 8px;
+    width: 18px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
