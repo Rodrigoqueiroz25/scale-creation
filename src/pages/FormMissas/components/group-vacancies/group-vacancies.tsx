@@ -2,12 +2,14 @@
 import { useState } from 'react';
 import { Vacancy } from '../vacancy/vacancy';
 import styles from './style.module.css';
+import { Allocation } from '../../../../@types/allocation';
 
 type Props = {
     numVacancies: number;
+    id: Allocation;
 }
 
-export function GroupVacancies({ numVacancies }: Props) {
+export function GroupVacancies({ numVacancies, id }: Props) {
 
     const [vacancies, setVacancies] = useState<number>(numVacancies);
 
@@ -15,7 +17,7 @@ export function GroupVacancies({ numVacancies }: Props) {
         const selects = [];
         for (let index = 0; index < vacancies; index++) {
             selects.push(
-                <Vacancy key={index} num={index}/>
+                <Vacancy key={index} id={{...id, numVacancy: index}}/>
             )
         }
         return selects;

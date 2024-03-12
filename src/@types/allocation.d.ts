@@ -1,9 +1,9 @@
 
 export type Allocation = {
-    day: string;
+    day: number;
     time: string;
     local: string;
-    numVacancy: number;
+    numVacancy?: number;
 }
 
 export type Allocations = {

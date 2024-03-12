@@ -4,54 +4,37 @@ import styles from './style.module.css';
 import { OptionsFillVacancies } from '../../../../data/options'
 import { useAllocationStore } from '../../../../hooks/useAllocationsStore';
 import { useShallow } from 'zustand/react/shallow'
+import { useOptionsVacancies } from '../../../../hooks/useOptionsVacancies';
+import { Allocation } from '../../../../@types/allocation';
 
 
 type Props = {
-    num: number;
+    id: Allocation;
 }
 
-export function Vacancy({ num }: Props) {
+export function Vacancy({ id }: Props) {
 
     const [nameSelected, setNameSelected] = useState('');
+    const { to_allocate, deallocate } = useAllocationStore();
+    const { getListOptions } = useOptionsVacancies();
 
-    const { allocations, to_allocate, deallocate } = useAllocationStore();
 
     function handleChange(valor: any) {
         if (nameSelected !== '') {
-            deallocate(nameSelected, {
-                day: '2',
-                time: '13:00',
-                local: 'matriz',
-                numVacancy: num
-            })
+            deallocate(nameSelected, id);
         }
         setNameSelected(valor);
-        to_allocate(valor, {
-            day: '2',
-            time: '13:00',
-            local: 'matriz',
-            numVacancy: num
-        })
-        // to_allocate({
-        //     option: valor,
-        //     location: [{
-        //         day: 'terça-feira',
-        //         local: 'matriz',
-        //         numVacancy: num,
-        //         time: '19:00'
-        //     }]
-        // })
+        to_allocate(valor, id);
     }
 
-    useEffect(() => {
-        console.log(allocations);
-    }, [allocations]);
 
     return (
         <select className={styles.select} onChange={(e) => handleChange(e.target.value)}>
+            <option key={-1} value=" "></option>
             {
-                OptionsFillVacancies.map((name, key) => (
-                    <option key={key} value={name}>{name}</option>
+
+                getListOptions(id).map((opt) => (
+                    <option key={opt.id} value={opt.name}>{opt.name}</option>
                 ))
             }
 
