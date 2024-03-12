@@ -1,8 +1,8 @@
 import { daysWeek, months } from "../constants/calendar";
 
 type Day = {
-    id: number;
-    name: string;
+    number: number;
+    dayWeekId: number;
 }
 
 type Week = {
@@ -43,8 +43,8 @@ export class MonthlyCalendar {
             else {
                 if(dayWeekId !== 1){
                     let day: Day = {
-                        id: dayMonth,
-                        name: daysWeek[dayWeekId]
+                        number: dayMonth,
+                        dayWeekId: dayWeekId
                     }
                     week.days.push(day);
                 }

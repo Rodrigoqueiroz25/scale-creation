@@ -1,26 +1,28 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './style.module.css';
 import { GroupVacancies } from '../group-vacancies/group-vacancies';
+import { daysWeek } from '../../../../constants/calendar';
 
 type Props = {
-    day: string;
+    dayWeekId: number;
     date: string;
-    hour: string;
+    time: string;
     numVacancies: number;
     nameCelebration: string;
+    local: string;
 }
 
-export function FormMissa({ date, day, hour, nameCelebration, numVacancies }: Props) {
+export function FormMissa({ date, dayWeekId, time, nameCelebration, numVacancies, local }: Props) {
 
     const [celebration, setCelebration] = useState(nameCelebration);
 
     return (
         <div className={styles.container}>
-            <span>{day}</span>
+            <span>{daysWeek[dayWeekId]}</span>
             <span>{date}</span>
-            <span>{hour} horas</span>
-            <GroupVacancies numVacancies={numVacancies}/>
+            <span>{time} horas</span>
+            <GroupVacancies numVacancies={numVacancies} id={{day: dayWeekId, local, time}}/>
             <div className={styles.celebration}>
                 <label htmlFor="celebration">Celebração: </label>
                 <input 

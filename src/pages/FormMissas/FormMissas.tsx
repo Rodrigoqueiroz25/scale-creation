@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styles from "./FormMissas.module.css";
 import stylesApp from '../../App.module.css';
@@ -33,13 +33,14 @@ export function FormMissas() {
 
             {
                 calendar.getWeek(semana)?.days.map((day) => (
-                    daysMasses[day.name].map((mass, key) => (
+                    daysMasses[day.dayWeekId].map((mass, key) => (
                         <FormMissa
-                            date={`${day.id}/${calendar.numMonth}/2024`}
-                            day={day.name}
-                            hour={mass.time}
+                            date={`${day.number}/${calendar.numMonth}/2024`}
+                            dayWeekId={day.dayWeekId}
+                            time={mass.time}
                             nameCelebration={mass.description}
                             numVacancies={mass.numVacancies}
+                            local="Matriz"
                             key={key}
                         />
                     ))

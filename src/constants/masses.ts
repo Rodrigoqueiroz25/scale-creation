@@ -24,17 +24,33 @@ function mass(time: string, local: string, numVacancies: number, description: st
 }
 
 export const daysMasses: { [index: string]: Mass[] } = {
-    'Domingo': [
+    0: [
         mass('08:00', matriz, 8, 'Missa do x domingo'),
         mass('17:00', matriz, 8, 'Missa do x domingo'),
         mass('19:00', matriz, 8, 'Missa do x domingo')
     ],
-    'Terça-feira':[mass('19:00', matriz, 4, 'Missa semanal')],
-    'Quarta-feira': [mass('19:00', matriz, 4, 'Missa semanal')],
-    'Quinta-feira': [mass('19:00', matriz, 4, 'Missa semanal')],
-    'Sexta-feira': [mass('19:00', matriz, 4, 'Missa semanal')],
-    'Sabado': [
+    2: [mass('19:00', matriz, 4, 'Missa semanal')],
+    3: [mass('19:00', matriz, 4, 'Missa semanal')],
+    4: [mass('19:00', matriz, 4, 'Missa semanal')],
+    5: [mass('19:00', matriz, 4, 'Missa semanal')],
+    6: [
         mass('17:00', matriz, 4, 'Missa semanal'), 
         mass('19:00', capel, 4, 'Missa semanal')
     ]
 };
+
+// export const daysMasses: Mass[][] = [
+//     [
+//         mass('08:00', matriz, 8, 'Missa do x domingo'),
+//         mass('17:00', matriz, 8, 'Missa do x domingo'),
+//         mass('19:00', matriz, 8, 'Missa do x domingo')
+//     ],
+//     [mass('19:00', matriz, 4, 'Missa semanal')],
+//     [mass('19:00', matriz, 4, 'Missa semanal')],
+//     [mass('19:00', matriz, 4, 'Missa semanal')],
+//     [mass('19:00', matriz, 4, 'Missa semanal')],
+//     [
+//         mass('17:00', matriz, 4, 'Missa semanal'), 
+//         mass('19:00', capel, 4, 'Missa semanal')
+//     ]
+// ];
