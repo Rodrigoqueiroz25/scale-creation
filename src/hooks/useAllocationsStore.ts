@@ -26,8 +26,8 @@ function deallocate(state: AllocationStore, location: Allocation, option: string
         allocations: {
             ...state.allocations,
             [option]: [...(state.allocations[option].filter((allocation) => 
-                allocation.day !== location.day && allocation.local !== location.local &&
-                allocation.numVacancy !== location.numVacancy && allocation.time !== location.time) || [])]
+                (allocation.dayWeekId !== location.dayWeekId) && (allocation.local !== location.local) &&
+                (allocation.numVacancy !== location.numVacancy) && (allocation.time !== location.time) && (allocation.dayMonth !== location.dayMonth)) || [])]
         }
     }
 }

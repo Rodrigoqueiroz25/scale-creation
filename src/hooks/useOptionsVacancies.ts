@@ -2,6 +2,7 @@
 import { Allocation } from "../@types/allocation";
 import { Option } from "../@types/option";
 import { OptionsFillVacancies } from "../data/options";
+import { isEqualAllocations } from "../utils/functions";
 import { useAllocationStore } from "./useAllocationsStore";
 
 
@@ -15,16 +16,17 @@ export function useOptionsVacancies(){
      */
     function getListOptions(vacancyRequester: Allocation): Option[] {
         let array: Option[] = OptionsFillVacancies;
-        let allocations = getAllocations();
-
+        const allocations = getAllocations();
+    
         for (const key in allocations) {
             allocations[key].forEach((allocation) => {
-                if(allocation.day === vacancyRequester.day){
-                    if(allocation.numVacancy !== vacancyRequester.numVacancy){
+                if (((vacancyRequester.dayWeekId > 0 && vacancyRequester.dayWeekId < 7) && (allocation.dayWeekId > 0 && allocation.dayWeekId < 7)) ||
+                    (vacancyRequester.dayWeekId === 0 && allocation.dayWeekId === 0)) {
+                    if (!isEqualAllocations(allocation, vacancyRequester)) { // se sao iguais, a opção da alocada no vacancyRequester
                         array = array.filter((opt) => opt.name !== key);
                     }
                 }
-            })
+            });
         }
         return array;
     }

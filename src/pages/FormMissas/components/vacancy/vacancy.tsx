@@ -31,12 +31,17 @@ export function Vacancy({ id }: Props) {
     return (
         <select className={styles.select} onChange={(e) => handleChange(e.target.value)}>
             <option key={-1} value=" "></option>
+            {/* { id.dayWeekId === 0 ?  */}
             {
-
                 getListOptions(id).map((opt) => (
                     <option key={opt.id} value={opt.name}>{opt.name}</option>
                 ))
-            }
+}
+                {/* : 
+                getListOptionsWeekly(id).map((opt) => (
+                    <option key={opt.id} value={opt.name}>{opt.name}</option>
+                ))
+            } */}
 
         </select >
     )
