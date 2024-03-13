@@ -11,9 +11,10 @@ type Props = {
     numVacancies: number;
     nameCelebration: string;
     local: string;
+    dayMonth: number
 }
 
-export function FormMissa({ date, dayWeekId, time, nameCelebration, numVacancies, local }: Props) {
+export function FormMissa({ date, dayWeekId, time, nameCelebration, numVacancies, local, dayMonth }: Props) {
 
     const [celebration, setCelebration] = useState(nameCelebration);
 
@@ -22,7 +23,7 @@ export function FormMissa({ date, dayWeekId, time, nameCelebration, numVacancies
             <span>{daysWeek[dayWeekId]}</span>
             <span>{date}</span>
             <span>{time} horas</span>
-            <GroupVacancies numVacancies={numVacancies} id={{day: dayWeekId, local, time}}/>
+            <GroupVacancies numVacancies={numVacancies} id={{dayWeekId, local, time, dayMonth}}/>
             <div className={styles.celebration}>
                 <label htmlFor="celebration">Celebração: </label>
                 <input 

@@ -36,6 +36,7 @@ export function FormMissas() {
                     daysMasses[day.dayWeekId].map((mass, key) => (
                         <FormMissa
                             date={`${day.number}/${calendar.numMonth}/2024`}
+                            dayMonth={day.number}
                             dayWeekId={day.dayWeekId}
                             time={mass.time}
                             nameCelebration={mass.description}

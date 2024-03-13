@@ -1,6 +1,7 @@
 
 export type Allocation = {
-    day: number;
+    dayWeekId: number;
+    dayMonth: number;
     time: string;
     local: string;
     numVacancy?: number;

@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Vacancy } from '../vacancy/vacancy';
 import styles from './style.module.css';
 import { Allocation } from '../../../../@types/allocation';
