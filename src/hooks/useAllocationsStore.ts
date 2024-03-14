@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { Allocation, Allocations } from "../@types/allocation";
 import { OptionsFillVacancies } from "../data/options";
+import { isEqualAllocations } from "../utils/functions";
 
 interface AllocationStore {
     allocations: Allocations;
@@ -20,14 +21,12 @@ function allocate(state: AllocationStore, location: Allocation, option: string):
     }
 }
 
-function deallocate(state: AllocationStore, location: Allocation, option: string): AllocationStore{
+function deallocate(state: AllocationStore, locationToDealocate: Allocation, option: string): AllocationStore{
     return {
         ...state,
         allocations: {
             ...state.allocations,
-            [option]: [...(state.allocations[option].filter((allocation) => 
-                (allocation.dayWeekId !== location.dayWeekId) && (allocation.local !== location.local) &&
-                (allocation.numVacancy !== location.numVacancy) && (allocation.time !== location.time) && (allocation.dayMonth !== location.dayMonth)) || [])]
+            [option]: [...(state.allocations[option].filter((allocation) => !isEqualAllocations(allocation, locationToDealocate)) || [])]
         }
     }
 }

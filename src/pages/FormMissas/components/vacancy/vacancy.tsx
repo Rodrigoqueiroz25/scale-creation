@@ -14,35 +14,31 @@ type Props = {
 
 export function Vacancy({ id }: Props) {
 
-    const [nameSelected, setNameSelected] = useState('');
+    const [nameSelected, setNameSelected] = useState(' ');
     const { to_allocate, deallocate } = useAllocationStore();
     const { getListOptions } = useOptionsVacancies();
 
 
     function handleChange(valor: any) {
-        if (nameSelected !== '') {
+        if (nameSelected !== ' ') {
             deallocate(nameSelected, id);
         }
         setNameSelected(valor);
         to_allocate(valor, id);
     }
 
+    useEffect(() => {
+        setNameSelected(' ');
+    },[id]);
 
     return (
-        <select className={styles.select} onChange={(e) => handleChange(e.target.value)}>
+        <select className={styles.select} onChange={(e) => handleChange(e.target.value)} value={nameSelected}>
             <option key={-1} value=" "></option>
-            {/* { id.dayWeekId === 0 ?  */}
             {
                 getListOptions(id).map((opt) => (
                     <option key={opt.id} value={opt.name}>{opt.name}</option>
                 ))
-}
-                {/* : 
-                getListOptionsWeekly(id).map((opt) => (
-                    <option key={opt.id} value={opt.name}>{opt.name}</option>
-                ))
-            } */}
-
+            }
         </select >
     )
 }

@@ -22,8 +22,10 @@ export function useOptionsVacancies(){
             allocations[key].forEach((allocation) => {
                 if (((vacancyRequester.dayWeekId > 0 && vacancyRequester.dayWeekId < 7) && (allocation.dayWeekId > 0 && allocation.dayWeekId < 7)) ||
                     (vacancyRequester.dayWeekId === 0 && allocation.dayWeekId === 0)) {
-                    if (!isEqualAllocations(allocation, vacancyRequester)) { // se sao iguais, a opção da alocada no vacancyRequester
-                        array = array.filter((opt) => opt.name !== key);
+                    if(allocation.weekId === vacancyRequester.weekId){
+                        if (!isEqualAllocations(allocation, vacancyRequester)) { // se sao iguais, a opção da alocada no vacancyRequester
+                            array = array.filter((opt) => opt.name !== key);
+                        }
                     }
                 }
             });
