@@ -38,6 +38,7 @@ export function FormMissas() {
                             date={`${day.number}/${calendar.numMonth}/2024`}
                             dayMonth={day.number}
                             dayWeekId={day.dayWeekId}
+                            weekId={semana}
                             time={mass.time}
                             nameCelebration={mass.description}
                             numVacancies={mass.numVacancies}
