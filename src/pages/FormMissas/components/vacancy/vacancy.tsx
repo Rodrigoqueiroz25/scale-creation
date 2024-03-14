@@ -15,7 +15,7 @@ type Props = {
 export function Vacancy({ id }: Props) {
 
     const [nameSelected, setNameSelected] = useState(' ');
-    const { to_allocate, deallocate } = useAllocationStore();
+    const { to_allocate, deallocate, isVacancyHasOptionAllocated } = useAllocationStore();
     const { getListOptions } = useOptionsVacancies();
 
 
@@ -28,7 +28,7 @@ export function Vacancy({ id }: Props) {
     }
 
     useEffect(() => {
-        setNameSelected(' ');
+        setNameSelected(isVacancyHasOptionAllocated(id));
     },[id]);
 
     return (
