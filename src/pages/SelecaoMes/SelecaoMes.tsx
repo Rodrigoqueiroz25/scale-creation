@@ -3,26 +3,13 @@ import styles from './SelecaoMes.module.css';
 import stylesApp from '../../App.module.css';
 import { useNavigate } from 'react-router-dom';
 import { ChangeEvent, useState } from 'react';
+import { months } from '../../constants/calendar';
 
 
 export function SelecaoMes(){
 
-    const [monthSelected, setMonthSelected] = useState('Janeiro');
-    const list = [
-        "Janeiro",
-        "Fevereiro",
-        "Marco",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro"
-    ];
-    
+    const [monthSelected, setMonthSelected] = useState(months[0]);
+ 
     const navigate = useNavigate();
 
     function handleClickButton(){
@@ -45,7 +32,7 @@ export function SelecaoMes(){
                         value={monthSelected} 
                         onChange={(e : ChangeEvent<HTMLSelectElement>) => setMonthSelected(e.target.value)}
                     >
-                        {list.map((item, index) => (
+                        {months.map((item, index) => (
                             <option key={index} value={item}>{item}</option>
                         ))}
                     </select>
