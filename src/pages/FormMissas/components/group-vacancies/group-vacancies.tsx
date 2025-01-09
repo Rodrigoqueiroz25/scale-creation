@@ -17,18 +17,18 @@ export function GroupVacancies({ numVacancies, id }: Props) {
         const selects = [];
         for (let index = 0; index < vacancies; index++) {
             selects.push(
-                <Vacancy key={index} id={{...id, numVacancy: index}}/>
+                <Vacancy key={index} id={{ ...id, numVacancy: index }} />
             )
         }
         return selects;
     }
 
-    function handleClickPlus(){
+    function handleClickPlus() {
         setVacancies(vacancies + 1);
     }
 
-    function handleClickLess(){
-        if(vacancies > 2){
+    function handleClickLess() {
+        if (vacancies > 2) {
             setVacancies(vacancies - 1);
         }
     }

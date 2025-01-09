@@ -3,11 +3,8 @@
     width: 125px;
 }
 
-.vacancy{
+.container{
     display: flex;
     align-items: center;
     gap: 3px;
-}
-.vacancy>input{
-    width: 80px;
 }

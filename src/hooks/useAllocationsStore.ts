@@ -9,7 +9,7 @@ interface AllocationStore {
     deallocate: (option: string, location: Allocation) => void;
     getAllocationsOption: (option: string) => Allocation[];
     getAllocations: () => Allocations;
-    isVacancyHasOptionAllocated: (vacancy: Allocation) => string;
+    isVacancyHasOptionAllocated: (vacancy: Allocation) => string[];
 }
 
 function allocate(state: AllocationStore, location: Allocation, option: string): AllocationStore{
@@ -32,13 +32,16 @@ function deallocate(state: AllocationStore, locationToDealocate: Allocation, opt
     }
 }
 
-function vacancyHasAllocation(vacancy: Allocation, store: Allocations): string{
-
+function vacancyHasAllocation(vacancy: Allocation, store: Allocations): string[]{
+    let res: Allocation | undefined;
     for (const opt in store) {
-        if(store[opt].find((allocation) => isEqualAllocations(allocation, vacancy)))
-            return opt;
+        res = store[opt].find((allocation) => isEqualAllocations(allocation, vacancy));
+        if(res){
+            console.log([opt, res.description || ""]);
+            return [opt, res.description || ""];
+        }
     }
-    return " ";
+    return [];
 }
 
 
@@ -52,6 +55,7 @@ export const useAllocationStore = create<AllocationStore>()((set, get) => ({
     getAllocationsOption: (option) => get().allocations[option],
     getAllocations: () => get().allocations,
 
-    isVacancyHasOptionAllocated: (vacancy) => vacancyHasAllocation(vacancy, get().allocations)
+    isVacancyHasOptionAllocated: (vacancy) => vacancyHasAllocation(vacancy, get().allocations),
+    //isVacancyHasDescriptionAllocated: (vacancy) => 
 }));
 
