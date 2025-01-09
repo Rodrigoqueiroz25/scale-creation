@@ -6,6 +6,8 @@ import { useAllocationStore } from '../../../../hooks/useAllocationsStore';
 import { useShallow } from 'zustand/react/shallow'
 import { useOptionsVacancies } from '../../../../hooks/useOptionsVacancies';
 import { Allocation } from '../../../../@types/allocation';
+import { Selector } from '../../../../components/Selector/Selector';
+import { descriptionsVacancies } from '../../../../data/descriptions-vacancies';
 
 
 type Props = {
@@ -14,31 +16,48 @@ type Props = {
 
 export function Vacancy({ id }: Props) {
 
-    const [nameSelected, setNameSelected] = useState(' ');
-    const { to_allocate, deallocate, isVacancyHasOptionAllocated } = useAllocationStore();
-    const { getListOptions } = useOptionsVacancies();
+    const [ description, setDescription ] = useState(" ");
+
+    const [ option, setOption ] = useState(" ");
+    const { to_allocate, deallocate, isVacancyHasOptionAllocated, allocations } = useAllocationStore();
+    const { getListOptions, getListDescriptions } = useOptionsVacancies();
 
 
-    function handleChange(valor: any) {
-        if (nameSelected !== ' ') {
-            deallocate(nameSelected, id);
+    function handleChangeOptions(newValue: string) {
+        if (option !== ' ') {
+            deallocate(option, id);
         }
-        setNameSelected(valor);
-        to_allocate(valor, id);
+        to_allocate(newValue, {...id, description: description});
+        setOption(newValue);
+    }
+
+    function handleChangeDescriptions(newValue: string){
+        if(newValue !== description && option !== " ") {
+            deallocate(option, id);
+            to_allocate(option, {...id, description: newValue});
+        }
+        setDescription(newValue);
     }
 
     useEffect(() => {
-        setNameSelected(isVacancyHasOptionAllocated(id));
-    },[id]);
+        console.log(allocations);
+    },[allocations]);
 
     return (
-        <select className={styles.select} onChange={(e) => handleChange(e.target.value)} value={nameSelected}>
-            <option key={-1} value=" "></option>
-            {
-                getListOptions(id).map((opt) => (
-                    <option key={opt.id} value={opt.name}>{opt.name}</option>
-                ))
-            }
-        </select >
+        <div className={styles.vacancy}>
+            <Selector 
+                key={'descriptions'}
+                onHandleSelector={handleChangeDescriptions}
+                options={getListDescriptions(id)}
+                optPreSelected={isVacancyHasOptionAllocated(id)[1]}
+            />
+            <span>-</span>
+            <Selector
+                key={'options'} 
+                onHandleSelector={handleChangeOptions}
+                options={getListOptions(id)}
+                optPreSelected={isVacancyHasOptionAllocated(id)[0]}
+            />
+        </div>
     )
 }

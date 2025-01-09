@@ -1,7 +1,11 @@
 
 .selects{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    /* grid-template-columns: 1fr 1fr; */
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    /* justify-items: center; */
 }
 
 .container{

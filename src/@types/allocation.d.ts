@@ -6,6 +6,7 @@ export type Allocation = {
     time: string;
     local: string;
     numVacancy?: number;
+    description?: string;
 }
 
 export type Allocations = {
