@@ -27,7 +27,6 @@ export const daysMasses: { [index: number]: Mass[] } = {
     0: [
         mass(morning, matriz, 8, 'Missa do x domingo'),
         mass(afternung, matriz, 8, 'Missa do x domingo'),
-        mass(night, matriz, 8, 'Missa do x domingo')
     ],
     2: [mass(night, matriz, 4, 'Missa semanal')],
     3: [mass(night, matriz, 4, 'Missa semanal')],
