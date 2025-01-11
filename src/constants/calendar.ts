@@ -1,13 +1,29 @@
 
-export enum DaysWeek {
-    DOMINGO = 'Domingo',
-    SEGUNDA = 'Segunda-feira',
-    TERCA = 'Terça-feira',
-    QUARTA = 'Quarta-feira',
-    QUINTA = 'Quinta-feira',
-    SEXTA = 'Sexta-feira',
-    SABADO = 'Sabado',
+// export enum DaysWeek {
+//     DOMINGO = 'Domingo',
+//     SEGUNDA = 'Segunda-feira',
+//     TERCA = 'Terça-feira',
+//     QUARTA = 'Quarta-feira',
+//     QUINTA = 'Quinta-feira',
+//     SEXTA = 'Sexta-feira',
+//     SABADO = 'Sabado',
+// }
+
+export enum Months {
+    JANEIRO = 'Janeiro',
+    FEVEREIRO = 'Fevereiro',
+    MARCO = 'Marco',
+    ABRIL = 'Abril',
+    MAIO = 'Maio',
+    JUNHO = 'Junho',
+    JULHO = 'Julho',
+    AGOSTO = 'Agosto',
+    SETEMBRO = 'Setembro',
+    OUTUBRO = 'Outubro',
+    NOVEMBRO = 'Novembro',
+    DEZEMBRO = 'Dezembro',
 }
+
 
 
 export const months = [

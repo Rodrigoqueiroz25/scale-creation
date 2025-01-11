@@ -10,7 +10,7 @@ type Week = {
     days: Day[];
 }
 
-export class MonthlyCalendar {
+export class MonthlyCalendarr {
 
     private id: number;
     private numWeeks: number;
@@ -70,6 +70,7 @@ export class MonthlyCalendar {
         return this.numWeeks;
     }
 
+    
    
     private monthEnds(dayMonth: number): boolean {
         return dayMonth === this.lenght;
