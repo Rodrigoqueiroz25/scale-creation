@@ -9,3 +9,8 @@ export function isEqualAllocations(obj1: Allocation, obj2: Allocation): boolean{
         bool = bool && (obj1.numVacancy === obj2.numVacancy);
     return bool;
 }
+
+
+export function isLeapYear(year: number): boolean {
+    return (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
+}

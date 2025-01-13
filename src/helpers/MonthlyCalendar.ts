@@ -1,22 +1,9 @@
-
-import DateDefaultAdapter from "../infra/adapters/date/DateDefaultAdapter";
-import Calendar from "./Calendar";
-
-type Day = {
-    number: number;
-    dayWeekId: number;
-}
-//interface chamada Day e classes com os nomes dos dias
+import DateCustom from "../infra/adapters/date/DateCustom";
+import Calendar, { Month } from "./Calendar";
 
 type Week = {
     id: number;
-    days: Day[];
-}
-
-type Month = {
-    name: string;
-    numberDays: number;
-    id: number;
+    days: DateCustom[];
 }
 
 export class MonthlyCalendar {
@@ -26,72 +13,47 @@ export class MonthlyCalendar {
     private month: Month;
 
     constructor(private name: string, private year: number) {
-        this.month = Calendar.getMonthByName(name);
-        this.numWeeks = 1;
-
-        let week: Week = {
-            id: this.numWeeks,
-            days: []
-        };
-
-        for (let dayMonth = 1; dayMonth <= this.month.numberDays; dayMonth++) {//para cada dia do mês faz
-
-            if (this.isMonday(dayMonth) && dayMonth !== 1) {// se for segunda e não for o primeiro dia do mês //condição de parada. finaliza semana.
+        this.month = Calendar.getMonthByName(this.name);
+        this.numWeeks = 0;
+        let week = this.createWeek();
+        for (let dayMonth = 1; dayMonth <= this.month.numberDays; dayMonth++) {
+            let date = new DateCustom(dayMonth, this.month.id, this.year);
+            week.days.push(date);
+            if (date.isSaturday() || this.isLastDayMonth(dayMonth)) {
                 this.weeks.push(week);
-                if (!this.monthEnds(dayMonth)) { //se não for ultimo dia do mês
-                    this.numWeeks++;
-                    week = {
-                        id: this.numWeeks,
-                        days: []
-                    };
-                }
-            }
-            else { 
-                if(!this.isMonday(dayMonth)){// se não for segunda cria o dia e adiciona no array week.
-                    let day: Day = {
-                        number: dayMonth,
-                        dayWeekId: this.getDayWeek(dayMonth, this.month.id)
-                    }
-                    week.days.push(day);
-                }
-            }
-
-            if (this.monthEnds(dayMonth)) { //se o mês acabou, encerra.
-                this.weeks.push(week);
-                break;
+                this.numWeeks = this.weeks.length;
+                week = this.createWeek();
             }
         }
     }
 
-
-    public getWeek(num: number){
-        if(num > 0)
-            return this.weeks[num - 1];
+    public getWeek(num: number): Week {
+        if (num <= 0 || num > this.numWeeks)
+            throw new Error("semana inválida");
+        return this.weeks[num - 1];
     }
 
-    get numMonth(){
+    public getWeeks() {
+        return this.weeks;
+    }
+
+    get numMonth() {
         return this.month.id;
     }
 
-    get numberWeeks(){
+    get numberWeeks() {
         return this.numWeeks;
     }
 
-    private isMonday(day: number): boolean{
-        const weekDay = new DateDefaultAdapter(day, this.month.id, this.year);
-        // const weekDay = this.getDayWeek(day, this.month.id);
-        return weekDay.isMonday();
+    private createWeek(): Week {
+        return {
+            id: this.numWeeks + 1,
+            days: []
+        }
     }
 
-     
-    private monthEnds(dayMonth: number): boolean {
+    private isLastDayMonth(dayMonth: number): boolean {
         return dayMonth === this.month.numberDays;
-    }
-
-
-    private getDayWeek(day: number, month: number) {
-        //return new DateDefaultAdapter(day, this.month.id, this.year).getDayWeek();
-        return new Date(this.year, month - 1, day).getDay();
     }
 
 }

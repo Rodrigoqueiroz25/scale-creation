@@ -1,3 +1,5 @@
+import { isLeapYear } from "../utils/functions";
+
 export type Month = {
     name: string;
     numberDays: number;
@@ -70,6 +72,10 @@ export default class Calendar {
 
     ];
 
+    public static listMonths(){
+        return this.months;
+    }
+
     public static getMonthByName(name: string): Month {
         const month = this.months.find((m) => m.name === name.toUpperCase());
         if (!month) {
@@ -86,7 +92,6 @@ export default class Calendar {
         return this.isleapYear(month);
     }
 
-
     private static isleapYear(month: Month) {
         if (month.name === "FEVEREIRO" && this.isBissexto()) {
             month.numberDays = 29;
@@ -96,7 +101,7 @@ export default class Calendar {
 
     private static isBissexto() {
         const year = new Date().getFullYear();
-        return (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
-    }
+        return isLeapYear(year);
 
+    }
 }
