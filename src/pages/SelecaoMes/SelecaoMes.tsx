@@ -4,6 +4,7 @@ import stylesApp from '../../App.module.css';
 import { useNavigate } from 'react-router-dom';
 import { ChangeEvent, useState } from 'react';
 import { months } from '../../constants/calendar';
+import Calendar from '../../helpers/Calendar';
 
 
 export function SelecaoMes(){
@@ -32,8 +33,8 @@ export function SelecaoMes(){
                         value={monthSelected} 
                         onChange={(e : ChangeEvent<HTMLSelectElement>) => setMonthSelected(e.target.value)}
                     >
-                        {months.map((item, index) => (
-                            <option key={index} value={item}>{item}</option>
+                        {Calendar.listMonths().map((month, index) => (
+                            <option key={index} value={month.name}>{month.name}</option>
                         ))}
                     </select>
                 </div>

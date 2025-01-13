@@ -1,13 +1,9 @@
 
-export default interface DateAdaper{
+export default interface DateAdapter{
     getYear(): number;
-    isLeapYear(year: number): boolean;
     getDayWeek(): string;
     getDayNumber(): number;
-    isSunday(): boolean;
-    isMonday(): boolean;
-    isBusinessDay(): boolean;
-    //getMonthName();
-    //getMonthNumber();
-
+    isSaturday(): boolean;
+    getMonth(): number;
+    getDayWeekId(): number;
 }

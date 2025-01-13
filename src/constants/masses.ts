@@ -1,4 +1,3 @@
-import { DaysWeek } from "./calendar";
 
 type Mass = {
     time: string;
@@ -28,6 +27,7 @@ export const daysMasses: { [index: number]: Mass[] } = {
         mass(morning, matriz, 8, 'Missa do x domingo'),
         mass(afternung, matriz, 8, 'Missa do x domingo'),
     ],
+    1: [mass(night, matriz, 4, 'Missa semanal')],
     2: [mass(night, matriz, 4, 'Missa semanal')],
     3: [mass(night, matriz, 4, 'Missa semanal')],
     4: [mass(night, matriz, 4, 'Missa semanal')],

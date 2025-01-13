@@ -3,13 +3,13 @@ import { useLocation } from "react-router-dom";
 import styles from "./FormMissas.module.css";
 import stylesApp from '../../App.module.css';
 import { FormMissa } from "./components/form-missa/form-missa";
-import { MonthlyCalendar } from "../../helpers/calendar-month";
+import { MonthlyCalendar } from "../../helpers/MonthlyCalendar";
 import { daysMasses } from "../../constants/masses";
 
 
 export function FormMissas() {
     const location = useLocation();
-    const calendar = new MonthlyCalendar(location.state.mes);
+    const calendar = new MonthlyCalendar(location.state.mes, new Date().getFullYear());
 
     const [mes] = useState(location.state.mes);
     const [semana, setSemana] = useState(1);
@@ -33,11 +33,11 @@ export function FormMissas() {
 
             {
                 calendar.getWeek(semana)?.days.map((day) => (
-                    daysMasses[day.dayWeekId].map((mass, key) => (
+                    daysMasses[day.getDayWeekId()].map((mass, key) => (
                         <FormMissa
-                            date={`${day.number}/${calendar.numMonth}/2024`}
-                            dayMonth={day.number}
-                            dayWeekId={day.dayWeekId}
+                            date={`${day.getDayNumber()}/${calendar.numMonth}/2024`}
+                            dayMonth={day.getMonth()}
+                            dayWeekId={day.getDayWeekId()}
                             weekId={semana}
                             time={mass.time}
                             nameCelebration={mass.description}
