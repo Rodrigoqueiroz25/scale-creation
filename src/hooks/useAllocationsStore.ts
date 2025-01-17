@@ -1,7 +1,19 @@
 import { create } from "zustand";
 import { Allocation, Allocations } from "../@types/allocation";
-import { OptionsFillVacancies } from "../data/options";
 import { isEqualAllocations } from "../utils/functions";
+import CoroinhaGateway from "../infra/gateways/coroinha/CoroinhaGateway";
+import CoroinhaGatewayMemory from "../infra/gateways/coroinha/CoroinhaGatewayMemory";
+import { Option } from "../@types/option";
+
+const options: CoroinhaGateway = new CoroinhaGatewayMemory();
+
+function getOpts(): Option[] {
+    let opts: Option[] = [];
+    options.getAll().then((o) => {
+        opts = o;
+    });
+    return opts;
+}
 
 interface AllocationStore {
     allocations: Allocations;
@@ -46,7 +58,7 @@ function vacancyHasAllocation(vacancy: Allocation, store: Allocations): string[]
 
 
 export const useAllocationStore = create<AllocationStore>()((set, get) => ({
-    allocations: OptionsFillVacancies.reduce((obj: Allocations, option) => { 
+    allocations: getOpts().reduce((obj: Allocations, option) => { 
         obj[option.name] = []; return obj
     }, {}),
     to_allocate: (option, location) => set((state) => allocate(state, location, option)),
@@ -56,6 +68,5 @@ export const useAllocationStore = create<AllocationStore>()((set, get) => ({
     getAllocations: () => get().allocations,
 
     isVacancyHasOptionAllocated: (vacancy) => vacancyHasAllocation(vacancy, get().allocations),
-    //isVacancyHasDescriptionAllocated: (vacancy) => 
 }));
 

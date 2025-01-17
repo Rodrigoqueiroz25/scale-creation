@@ -3,13 +3,11 @@ import styles from './SelecaoMes.module.css';
 import stylesApp from '../../App.module.css';
 import { useNavigate } from 'react-router-dom';
 import { ChangeEvent, useState } from 'react';
-import { months } from '../../constants/calendar';
-import Calendar from '../../helpers/Calendar';
-
+import {NameMonths} from "../../enum/NameMonths.enum";
 
 export function SelecaoMes(){
 
-    const [monthSelected, setMonthSelected] = useState(months[0]);
+    const [monthSelected, setMonthSelected] = useState<string>(NameMonths.JANEIRO);
  
     const navigate = useNavigate();
 
@@ -33,8 +31,8 @@ export function SelecaoMes(){
                         value={monthSelected} 
                         onChange={(e : ChangeEvent<HTMLSelectElement>) => setMonthSelected(e.target.value)}
                     >
-                        {Calendar.listMonths().map((month, index) => (
-                            <option key={index} value={month.name}>{month.name}</option>
+                        {Object.values(NameMonths).map((month, index) => (
+                            <option key={index} value={month}>{month}</option>
                         ))}
                     </select>
                 </div>
@@ -45,8 +43,6 @@ export function SelecaoMes(){
                     </button>
                 </div>
             </form>
-            
         </section>
-    
     );
 }

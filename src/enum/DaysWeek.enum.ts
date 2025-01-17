@@ -1,0 +1,10 @@
+
+export enum DaysWeek {
+    DOMINGO = 'DOMINGO',
+    SEGUNDA = 'SEGUNDA-FEIRA',
+    TERCA = 'TERCA-FEIRA',
+    QUARTA = 'QUARTA-FEIRA',
+    QUINTA = 'QUINTA-FEIRA',
+    SEXTA = 'SEXTA-FEIRA',
+    SABADO = 'SABADO',
+}

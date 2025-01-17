@@ -1,13 +1,13 @@
 
 import { useEffect, useState } from 'react';
 import styles from './style.module.css';
-import { OptionsFillVacancies } from '../../../../data/options'
 import { useAllocationStore } from '../../../../hooks/useAllocationsStore';
-import { useShallow } from 'zustand/react/shallow'
 import { useOptionsVacancies } from '../../../../hooks/useOptionsVacancies';
 import { Allocation } from '../../../../@types/allocation';
 import { Selector } from '../../../../components/Selector/Selector';
-import { descriptionsVacancies } from '../../../../data/descriptions-vacancies';
+import CoroinhaGateway from '../../../../infra/gateways/coroinha/CoroinhaGateway';
+import CoroinhaGatewayMemory from '../../../../infra/gateways/coroinha/CoroinhaGatewayMemory';
+import { Option } from '../../../../@types/option';
 
 
 type Props = {
@@ -16,11 +16,13 @@ type Props = {
 
 export function Vacancy({ id }: Props) {
 
+    const options: CoroinhaGateway = new CoroinhaGatewayMemory();
+    const [ opts, setOpts ] = useState<Option[]>([]);
     const [ description, setDescription ] = useState(" ");
 
     const [ option, setOption ] = useState(" ");
     const { to_allocate, deallocate, isVacancyHasOptionAllocated, allocations } = useAllocationStore();
-    const { getListOptions, getListDescriptions } = useOptionsVacancies();
+    const { getListOptions, getListDescriptions } = useOptionsVacancies(options);
 
 
     function handleChangeOptions(newValue: string) {
@@ -40,7 +42,9 @@ export function Vacancy({ id }: Props) {
     }
 
     useEffect(() => {
-        console.log(allocations);
+        (async () => {
+            setOpts(await getListOptions(id));
+        })();
     },[allocations]);
 
     return (
@@ -55,7 +59,7 @@ export function Vacancy({ id }: Props) {
             <Selector
                 key={'options'} 
                 onHandleSelector={handleChangeOptions}
-                options={getListOptions(id)}
+                options={opts}
                 optPreSelected={isVacancyHasOptionAllocated(id)[0]}
             />
         </div>

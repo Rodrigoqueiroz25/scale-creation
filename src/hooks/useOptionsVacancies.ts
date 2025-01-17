@@ -2,12 +2,12 @@
 import { Allocation } from "../@types/allocation";
 import { Option } from "../@types/option";
 import { descriptionsVacancies } from "../data/descriptions-vacancies";
-import { OptionsFillVacancies } from "../data/options";
+import CoroinhaGateway from "../infra/gateways/coroinha/CoroinhaGateway";
 import { isEqualAllocations } from "../utils/functions";
 import { useAllocationStore } from "./useAllocationsStore";
 
 
-export function useOptionsVacancies(){
+export function useOptionsVacancies(options: CoroinhaGateway){
 
     const { getAllocations } = useAllocationStore();
 
@@ -15,8 +15,9 @@ export function useOptionsVacancies(){
      * obter lista de nomes que posso exibir num select.
      * 
      */
-    function getListOptions(vacancyRequester: Allocation): Option[] {
-        let array: Option[] = OptionsFillVacancies;
+    async function getListOptions(vacancyRequester: Allocation): Promise<Option[]> {
+        //let array: Option[] = OptionsFillVacancies;
+        let array: Option[] = await options.getAll(); 
         const allocations = getAllocations();
     
         for (const key in allocations) {

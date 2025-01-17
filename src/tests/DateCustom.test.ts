@@ -1,5 +1,5 @@
 import { notEqual } from "assert";
-import DateCustom from "../infra/adapters/date/DateCustom";
+import DateCustom from "../entities/DateCustom";
 
 
 let date: DateCustom;
@@ -35,7 +35,7 @@ test("o dia da semana do dia 03/03/2025 é SEGUNDA-FEIRA", () => {
 
 test("o dia da semana do dia 04/03/2025 é TERÇA-FEIRA", () => {
     const date = new DateCustom(4, 3, 2025);
-    expect(date.getDayWeek()).toEqual("TERÇA-FEIRA")
+    expect(date.getDayWeek()).toEqual("TERCA-FEIRA")
 })
 
 test("o dia da semana do dia 05/03/2025 é QUARTA-FEIRA", () => {
@@ -55,7 +55,7 @@ test("o dia da semana do dia 07/03/2025 é SEXTA-FEIRA", () => {
 
 test("o dia da semana do dia 08/03/2025 é SÁBADO", () => {
     const date = new DateCustom(8, 3, 2025);
-    expect(date.getDayWeek()).toEqual("SÁBADO")
+    expect(date.getDayWeek()).toEqual("SABADO")
 })
 
 

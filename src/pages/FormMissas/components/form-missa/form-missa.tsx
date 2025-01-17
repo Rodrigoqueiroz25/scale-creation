@@ -1,8 +1,8 @@
 
 import { useEffect, useState } from 'react';
 import styles from './style.module.css';
-import { GroupVacancies } from '../group-vacancies/group-vacancies';
 import { daysWeek } from '../../../../constants/calendar';
+import { Vacancy } from '../vacancy/vacancy';
 
 type Props = {
     dayWeekId: number;
@@ -15,24 +15,53 @@ type Props = {
     dayMonth: number
 }
 
-export function FormMissa({ date, dayWeekId, time, nameCelebration, numVacancies, local, dayMonth, weekId }: Props) {
+export function FormMissa({
+    date, dayWeekId, time, nameCelebration, numVacancies, local, dayMonth, weekId
+}: Props) {
 
     const [celebration, setCelebration] = useState(nameCelebration);
+    const [vacancies, setVacancies] = useState<number>(numVacancies);
+
+    function handleClickPlus() {
+        setVacancies(vacancies + 1);
+    }
+
+    function handleClickLess() {
+        if (vacancies > 2) {
+            setVacancies(vacancies - 1);
+        }
+    }
+
+    const renderSelects = () => {
+        const selects = [];
+        for (let index = 0; index < vacancies; index++) {
+            selects.push(
+                <Vacancy key={index} id={{dayWeekId, dayMonth, weekId, time, local, numVacancy: index}} />
+            )
+        }
+        return selects;
+    }
 
     return (
         <div className={styles.container}>
             <span>{daysWeek[dayWeekId]}</span>
             <span>{date}</span>
             <span>{time} horas</span>
-            <GroupVacancies numVacancies={numVacancies} id={{dayWeekId, local, time, dayMonth, weekId}}/>
+            <div className={styles.contain}>
+                <div className={styles.selects}>{renderSelects()}</div>
+                <div className={styles.buttons}>
+                    <button type='button' onClick={handleClickPlus}>+</button>
+                    <button type='button' onClick={handleClickLess}>-</button>
+                </div>
+            </div>
             <div className={styles.celebration}>
                 <label htmlFor="celebration">Celebração: </label>
-                <input 
+                <input
                     type='text'
-                    id='celebration' 
+                    id='celebration'
                     value={celebration}
                     onChange={(e) => setCelebration(e.target.value)}
-                    />
+                />
             </div>
         </div>
     );

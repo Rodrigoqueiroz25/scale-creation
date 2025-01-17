@@ -1,8 +1,7 @@
 
-import DateAdapter from "./DateAdapter";
+import { DaysWeek } from "../enum/DaysWeek.enum";
 
-
-export default class DateCustom implements DateAdapter {
+export default class DateCustom {
 
     private day: number;
     private year: number;
@@ -14,7 +13,6 @@ export default class DateCustom implements DateAdapter {
         //fazer validações.
         if(day < 1) throw new Error("Data inválida");
         if(month < 1 || month > 12) throw new Error("Data inválida");
-      
       
         this.day = day;
         this.year = year;
@@ -48,21 +46,22 @@ export default class DateCustom implements DateAdapter {
     }
 
     private genDayWeek(id: number): string {
+        if(id < 0 || id > 6) throw new Error("dia inválido");
         switch (id) {
             case 0:
-                return "DOMINGO";
+                return DaysWeek.DOMINGO;
             case 1:
-                return "SEGUNDA-FEIRA";
+                return DaysWeek.SEGUNDA;
             case 2:
-                return "TERÇA-FEIRA";
+                return DaysWeek.TERCA;
             case 3:
-               return "QUARTA-FEIRA";
+               return DaysWeek.QUARTA;
             case 4:
-                return "QUINTA-FEIRA";
+                return DaysWeek.QUINTA;
             case 5:
-                return "SEXTA-FEIRA";
+                return DaysWeek.SEXTA;
             case 6:
-                return "SÁBADO";
+                return DaysWeek.SABADO;
         }
         return "";
     }

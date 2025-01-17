@@ -1,0 +1,253 @@
+
+quero criar uma escala.
+
+eu tenho o seguinte:
+
+1 - coroinha
+2 - missa
+
+Coroinha
+
+- nome
+- disponibilidade
+- status(coroinha ou cerimoniario)
+- id
+
+Missa
+
+- dia (segunda, terça, ...)
+- horario
+- descrição
+- solenidade
+- id
+
+o coroinha será alocado em uma vaga x para a missa id.
+
+Alocação
+
+- nome coroinha ou id
+- dia (segunda, terça, ...)
+- data(1,31)
+- horario
+- numero de vaga
+- id
+
+
+
+tem regras que devem ser seguidas
+
+1 - tem missa de terça a domingo
+2 - coroinha deve servir duas vezes na semana. uma vez entre terça e sabado e uma vez no domingo.
+3 - isso vale por semana.
+4 - não deve estar duas vezes na mesma missa.
+
+para os dias de terça a sabado:
+
+1 - o coroinha deve servir uma missa pelo menos.
+2 - pelo menos 4 pessoas por dia (depende muito da quantidade total de coroinhas)
+3 - deve ter uma missa por dia.
+
+para o domingo
+
+1 - o coroinha deve servir uma missa pelo menos.
+2 - pelo menos 8 vagas (usar a quantidade de pessoas para calcular isso)
+3 - caso de solenidade dominical, pode servir mais de uma vez.
+4 - deve ter duas missas por dia.
+
+
+
+a lista de coroinhas e missas devo obter de fora? acho q sim.
+- pelo backend de um banco de dados.
+- ou outro.
+
+vamos usar adapter e gateway.
+
+
+
+essas regras são dentro de uma semana e poderiam ser codificadas por um objeto semana.
+
+tabela missas: id, dia, horario
+tabela coroinha: id, nome, (disponibilidade)
+tabela coroinhas alocados: idMissa, idCoroinha, data, vaga.
+
+...vamos tentar colocar em xml. 
+como ler um xml no javascript?
+
+
+uma busca fundamental é: o coroinha id ta escalado em alguma missa entre terça e sábado da semana atual?
+
+
+
+
+
+Casos de uso::
+
+1 - Escalar um coroinha para servir em uma vaga disponível.
+2 - Retirar coroinha da escala de uma determinada missa.
+3 - Adicionar uma vaga para coroinha em uma missa
+4 - Remover uma vaga para coroinha em uma missa
+5 - Adicionar uma missa
+6 - remover uma missa
+7 - salvar a escala em pdf
+8 - salvar a escala em docx
+9 - visualizar uma previa da escala
+10 - poder editar depois de finalizada a escala ou semana.
+
+
+
+as telas são os use cases. use case é um comportamento oferecido ao usuário. 
+ele definiu classes que cuidam disso exclusivamente.
+essas classes usam um objeto de dominio que contem as regras de dominio.
+    cuida de orquestrar coisas como obter dados, manipular e salvar se preciso.
+use case define o que a aplicação faz e como interage com as regras de negocio, logica de negocio encapsulada nas entidades.
+
+orquestra o fluxo de dados entre a interface do usuário, as entidades e quaisquer sistemas externos.
+- descrever um processo de negocio ou funcionalidade específica,
+- conter a logica necessária para isso.
+- interagir com uma ou mais entidades.
+
+aqui no front, a page é use case.
+
+____
+CAMADA 3
+
+eu criei uns gateways:
+- massGateway que fornece a informação de quantas missas, horarios, locais, vagas e descrição de missas em um dia da semana
+- monthGateway que fornece as datas do mês escolhido.
+- coroinhaGateway que fornece uma lista dos coroinhas que serão escalados.
+
+por enquanto estão obtendo da memória mesmo.
+
+fica faltando um pra gravar as alocações dos coroinhas...
+
+
+
+_____
+CAMADA 4
+
+ainda não fiz.
+
+
+
+___
+CAMADA 2
+
+os meus use cases até o momento são FormMissas e SelecaoMes
+
+- FormMissas cuida de obter os dados necessários para gerar um formulário, renderizar na tela e coletar a entrada do usuário.
+- SelecaoMes cuida de oferecer ao usuário um formulário para escolha do mês e passar para frente.
+
+
+
+___
+CAMADA 1
+
+talvez tenha objetos como missa, dataCustom, allocation
+
+
+
+proximo passo da refatoração é olhar a parte da alocação e os componentes de FormMissas.
+
+
+
+
+
+
+
+
+
+<><><><><><><><><><>><><><><><><><><><><><><><><><><><><><><>><><><><><><><><><><><><><><><><><><><><>><><><><><><><><><><>
+
+quero um programa que me ajude a criar a escala mensal.
+
+eu poderia criar da seguinte forma:
+
+_____
+PRIMEIRA forma
+- recebendo todos os dados do usuário.
+
+eu exibo um botão para adicionar missa e o usuário clica nele. 
+aparece formMissa e o usuário insere o dia da semana, a data, horario, nomes dos escalados e descrição.
+
+e assim por diante em todas as missas da semana e depois clicar em "próxima semana".
+ 
+eu preciso me preocupar com:
+- inserir uma missa
+- me preocupar com as datas
+- me preocupar com dia de semana
+- colocar horário
+- saber quais pessoas poderia inserir em uma dada missa
+- colocar uma descrição.
+
+contras: desse jeito é como fazer manualmente, a unica coisa que seria automatizada seria 
+a formatação final do arquivo.
+
+
+_______
+SEGUNDA FORMA
+- usando template das missas semanais
+
+ao entrar na tela, aparece formMissa de acordo com o template. 
+o usuário não mais insere o dia da semana, horario, descrição e tem um numero de vagas específico que é fixo. 
+
+eu preciso me preocupar com:
+- me preocupar com as datas
+- saber quais pessoas poderia inserir em uma dada missa
+- colocar uma descrição.
+
+contras: 
+    não preciso ficar inserindo as missas, mas preciso me preocupar em associar uma data a cada missa
+    e tb as pessoas que podem servir naquele dia e data.
+    o usuário tem que corrigir a primeira e ultima semana do mês, excluindo missas.
+
+
+___
+TERCEIRA FORMA
+- usando um gerador de datas para o mês.
+
+antes de entrar na tela, o usuário seleciona o mês para o qual deseja criar a escala.
+o usuário não mais precisa inserir as datas e nem corrigir a primeira e ultima semana do mês.
+
+eu preciso me preocupar com:
+- saber quais pessoas poderia inserir em uma dada missa
+- colocar uma descrição.
+
+
+contras:
+    ter q digitar o nome dos coroinhas, podendo errar.
+
+
+___
+QUARTA FORMA
+- usar uma lista de coroinhas em selects para as vagas.
+
+o usuário clica no select e ver todas as possibilidades que pode selecionar e seleciona uma, assim não errando.
+
+eu preciso me preocupar com:
+- saber se o coroinha pode ser escalado naquela missa.
+- colocar uma descrição.
+
+contras:
+    eu tenho que verificar manualmente se o coroinha pode naquela missa, disponibilidade e de acordo com a regra de alocação por semana.
+
+
+___
+QUINTA FORMA
+- colocar a regra de não ser escalado duas vezes de terça a sabado e duas vezes no domingo.
+
+quando o usuário escalar fulano em uma missa entre terça e sábado, ele fica indisponível para os outros dias desse range.
+quando escalar em uma missa do domingo, fica indisponível para a outra missa do domingo.
+Isso dentro da mesma semana, em outra semana, zera tudo.
+
+eu preciso me preocupar com:
+- saber se o coroinha pode ser escalado naquela missa de acordo com sua disponibilidade.
+- colocar uma descrição.
+
+contra:
+    eu preciso saber manualmente a disponibilidade dos coroinhas.
+
+
+to com a quinta forma implementada.
+
+
+olhando tudo assim, acho q o gerador de datas deveria ser embutido.

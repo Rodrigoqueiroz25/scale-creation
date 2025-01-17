@@ -3,19 +3,32 @@ import { useLocation } from "react-router-dom";
 import styles from "./FormMissas.module.css";
 import stylesApp from '../../App.module.css';
 import { FormMissa } from "./components/form-missa/form-missa";
-import { MonthlyCalendar } from "../../helpers/MonthlyCalendar";
-import { daysMasses } from "../../constants/masses";
+import MassGateway, { MassesByDay } from "../../infra/gateways/MassGateway";
+import {DatesMonthGenerator} from "../../helpers/DatesMonthGenerator";
+import {MassGatewayMemory} from "../../infra/gateways/MassGatewayMemory";
 
+type FormMass = {
+    day: number;
+    dayWeekId: number;
+    dayWeek: string;
+    month: number;
+    year: number;
+    time: string;
+    local: string;
+    vacancies: number;
+    description: string;
+}
 
 export function FormMissas() {
     const location = useLocation();
-    const calendar = new MonthlyCalendar(location.state.mes, new Date().getFullYear());
+    const datesMonth = new DatesMonthGenerator(location.state.mes, new Date().getFullYear());
+    const massesByDay: MassGateway = new MassGatewayMemory();
 
-    const [mes] = useState(location.state.mes);
     const [semana, setSemana] = useState(1);
+    const [massesWeek, setMassesWeek] = useState([] as MassesByDay[]);
 
     function handleClickNextWeek() {
-        if (semana < calendar.numberWeeks) {
+        if (semana < datesMonth.totalWeeks) {
             setSemana(semana + 1);
         }
     }
@@ -26,26 +39,54 @@ export function FormMissas() {
         }
     }
 
+    function combineObjects() {
+        const forms: FormMass[] = [];
+        datesMonth.getWeek(semana).getAll().forEach((day) => {
+            massesWeek.forEach((massByDay) => {
+                if (day.getDayWeek() === massByDay.day) {
+                    massByDay.masses.forEach((mass) => {
+                        forms.push({
+                            day: day.getDayNumber(),
+                            month: day.getMonth(),
+                            year: day.getYear(),
+                            dayWeek: day.getDayWeek(),
+                            dayWeekId: day.getDayWeekId(),
+                            time: mass.time,
+                            local: mass.local,
+                            vacancies: mass.vacancies,
+                            description: mass.description
+                        })
+                    })
+                }
+            })
+        })
+        return forms;
+    }
+
+    useEffect(() => {
+        massesByDay.getAll().then(masses => {
+            setMassesWeek(masses);
+        })
+    }, []);
+
     return (
         <section className={stylesApp.contentFlex}>
-            <h1 className={styles.mes}>{mes}</h1>
+            <h1 className={styles.mes}>{datesMonth.getName()}</h1>
             <h2 className={styles.semana}>{semana}º Semana</h2>
 
             {
-                calendar.getWeek(semana)?.days.map((day) => (
-                    daysMasses[day.getDayWeekId()].map((mass, key) => (
-                        <FormMissa
-                            date={`${day.getDayNumber()}/${calendar.numMonth}/2024`}
-                            dayMonth={day.getMonth()}
-                            dayWeekId={day.getDayWeekId()}
-                            weekId={semana}
-                            time={mass.time}
-                            nameCelebration={mass.description}
-                            numVacancies={mass.numVacancies}
-                            local="Matriz"
-                            key={key}
-                        />
-                    ))
+                combineObjects().map((mass, key) => (
+                    <FormMissa
+                        date={`${mass.day}/${mass.month}/${mass.year}`}
+                        dayMonth={mass.month}
+                        dayWeekId={mass.dayWeekId}
+                        weekId={semana}
+                        time={mass.time}
+                        nameCelebration={mass.description}
+                        numVacancies={mass.vacancies}
+                        local={mass.local}
+                        key={key}
+                    />
                 ))
             }
 
