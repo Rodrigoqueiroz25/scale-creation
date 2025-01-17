@@ -1,0 +1,105 @@
+
+quais as entradas e saídas?
+
+___
+PRIMEIRA FORMA
+
+entradas do usuário:
+- data formatada d/m/yyyy
+- dia da semana
+- horário
+- pessoas que vão servir digitando
+- descrição
+- quantidade de missas semanais
+
+saídas:
+uma lista com objetos que contém:
+- data
+- dia da semana
+- horário
+- lista de pessoas selecionadas 
+    nome, numero de vaga.
+- descrição
+- id
+
+
+___
+SEGUNDA FORMA
+
+entradas do usuário: 
+- data formatada d/m/yyyy
+- pessoas que vão servir digitando
+- descrição
+
+entradas de outro local:
+- dia da semana
+- horário
+- quantidade de missas semanais
+
+saídas:
+uma lista com objetos que contém:
+- data
+- dia da semana
+- horário
+- lista de pessoas selecionadas 
+    nome, numero de vaga.
+- descrição
+- id
+
+___
+TERCEIRA FORMA
+
+entradas do usuário: 
+- pessoas que vão servir digitando
+- descrição
+
+entradas de outro local:
+- data
+- dia da semana
+- horário
+- quantidade de missas semanais
+
+saídas:
+uma lista com objetos que contém:
+- data
+- dia da semana
+- horário
+- lista de pessoas selecionadas 
+    nome, numero de vaga.
+- descrição
+- id
+
+
+___
+QUARTA, QUINTA E SEXTA FORMA
+
+entradas do usuário: 
+- pessoas que vão servir selecionando em select
+- descrição
+
+entradas de outro local:
+- data
+- dia da semana
+- horário
+- quantidade de missas semanais
+
+saídas:
+uma lista com objetos que contém:
+- data
+- dia da semana
+- horário
+- lista de pessoas selecionadas 
+    nome, numero de vaga.
+- descrição
+- id
+
+
+a saída é meio que padrão. essa saída vai estar em um banco, ou memória, ou xml, ou pdf, ou docx.
+ai minimiza a entrada que vem do usuário e muda pra entrada de outro local.
+
+
+para a terceira forma, preciso combinar o template com as datas geradas.
+
+
+Como modelar os dados?
+

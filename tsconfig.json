@@ -22,6 +22,9 @@
   },
   "include": [
     "src"
-, "exclude/DateDefaultAdapter.test.ts"  ],
+  ],
+  "exclude": [
+    "exclude"
+  ]
   
 }

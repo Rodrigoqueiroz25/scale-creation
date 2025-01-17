@@ -11,3 +11,36 @@
     border-radius: 4px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
+
+.contain{
+    display: flex;
+    gap: 1rem;
+}
+
+.selects{
+    display: flex;
+    /* grid-template-columns: 1fr 1fr; */
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    /* justify-items: center; */
+}
+
+.buttons{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    justify-content: start;
+    gap: 2px;
+}
+
+.buttons>button{
+    background-color: beige;
+    border-color: black;
+    border-radius: 8px;
+    width: 18px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
