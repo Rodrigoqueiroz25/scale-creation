@@ -132,10 +132,10 @@ ainda não fiz.
 ___
 CAMADA 2
 
-os meus use cases até o momento são FormMissas e SelecaoMes
+os meus use cases até o momento são FormMissas e MonthSelection
 
 - FormMissas cuida de obter os dados necessários para gerar um formulário, renderizar na tela e coletar a entrada do usuário.
-- SelecaoMes cuida de oferecer ao usuário um formulário para escolha do mês e passar para frente.
+- MonthSelection cuida de oferecer ao usuário um formulário para escolha do mês e passar para frente.
 
 
 
