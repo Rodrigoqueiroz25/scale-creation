@@ -1,11 +1,11 @@
 
-import styles from './SelecaoMes.module.css';
+import styles from './MonthSelection.module.css';
 import stylesApp from '../../App.module.css';
 import { useNavigate } from 'react-router-dom';
 import { ChangeEvent, useState } from 'react';
 import {NameMonths} from "../../enum/NameMonths.enum";
 
-export function SelecaoMes(){
+export function MonthSelection(){
 
     const [monthSelected, setMonthSelected] = useState<string>(NameMonths.JANEIRO);
  
