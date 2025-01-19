@@ -4,8 +4,9 @@ import styles from "./FormMissas.module.css";
 import stylesApp from '../../App.module.css';
 import { FormMissa } from "./components/form-missa/form-missa";
 import MassGateway, { MassesByDay } from "../../infra/gateways/MassGateway";
-import {DatesMonthGenerator} from "../../helpers/DatesMonthGenerator";
 import {MassGatewayMemory} from "../../infra/gateways/MassGatewayMemory";
+import MonthFactory from "../../helpers/MonthFactory";
+import Month from "../../entities/Month";
 
 type FormMass = {
     day: number;
@@ -21,11 +22,11 @@ type FormMass = {
 
 export function FormMissas() {
     const location = useLocation();
-    const datesMonth = new DatesMonthGenerator(location.state.mes, new Date().getFullYear());
+    const datesMonth = MonthFactory.create(location.state.mes, new Date().getFullYear()) as Month;
     const massesByDay: MassGateway = new MassGatewayMemory();
 
     const [semana, setSemana] = useState(1);
-    const [massesWeek, setMassesWeek] = useState([] as MassesByDay[]);
+    const [massesWeek, setMassesWeek] = useState<MassesByDay[]>([]);
 
     function handleClickNextWeek() {
         if (semana < datesMonth.totalWeeks) {

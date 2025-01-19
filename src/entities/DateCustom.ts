@@ -3,11 +3,11 @@ import { DaysWeek } from "../enum/DaysWeek.enum";
 
 export default class DateCustom {
 
-    private day: number;
-    private year: number;
-    private month: number;
-    private dayWeekId: number;
-    private dayWeek: string;
+    private readonly day: number;
+    private readonly year: number;
+    private readonly month: number;
+    private readonly dayWeekId: number;
+    private readonly dayWeek: string;
 
     constructor(day: number, month: number, year: number) {
         //fazer validações.
@@ -43,6 +43,12 @@ export default class DateCustom {
 
     public isSaturday(): boolean {
         return this.dayWeek === this.genDayWeek(6);
+    }
+
+    //compare
+    public static isEqual(date1: DateCustom, date2: DateCustom): boolean {
+        return date1.getDayNumber() === date2.getDayNumber() && date1.getMonth() === date2.getMonth() && date1.getYear() === date2.getYear() &&
+            date1.getDayWeekId() === date2.getDayWeekId() && date1.getDayWeek() === date2.getDayWeek();
     }
 
     private genDayWeek(id: number): string {
