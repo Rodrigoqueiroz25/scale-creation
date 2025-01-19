@@ -10,9 +10,12 @@ export default class Week {
     }
 
     public addDay(day: DateCustom){
-        if(this.days.length <= 7)
-            this.days.push(day);
+        if(this.days.find(d => DateCustom.isEqual(d, day)))
+            throw new Error("cannot have repeated days")
+        if(this.days.length > 6) throw new Error("week support a total of 7 days")
+        this.days.push(day);
     }
+
 
     public getAll(){
         return this.days;

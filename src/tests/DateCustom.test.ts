@@ -8,7 +8,7 @@ beforeEach(() => {
     date = new DateCustom(2, 3, 2025);
 })
 
-test("obtem o ano 2025 da data 02/03/2025", () => {
+test("obtém o ano 2025 da data 02/03/2025", () => {
     expect(date.getYear()).toEqual(2025)
 })
 
