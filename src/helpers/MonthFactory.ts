@@ -46,6 +46,8 @@ export default class MonthFactory {
                 return this.monthGenerator(30, 11, year, name);
             case NameMonths.DEZEMBRO:
                 return this.monthGenerator(31, 12, year, name);
+            default:
+                throw new Error(`Unknown Month ${name}`);
         }
     }
 

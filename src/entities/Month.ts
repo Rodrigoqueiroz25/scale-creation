@@ -37,7 +37,7 @@ export default class Month {
     }
 
     public getWeek(id: number) {
-        if (id < 1 || id > this.totalWeeks || this.weeks[id -1])
+        if (id < 1 || id > this.totalWeeks)
             throw new Error("semana inválida");
         return this.weeks[id - 1];
     }

@@ -3,10 +3,10 @@ import { useLocation } from "react-router-dom";
 import styles from "./FormMissas.module.css";
 import stylesApp from '../../App.module.css';
 import { FormMissa } from "./components/form-missa/form-missa";
-import MassGateway, { MassesByDay } from "../../infra/gateways/MassGateway";
-import {MassGatewayMemory} from "../../infra/gateways/MassGatewayMemory";
 import MonthFactory from "../../helpers/MonthFactory";
-import Month from "../../entities/Month";
+import {WeeklyScheduleGatewayMemory} from "../../infra/gateways/WeeklyScheduleGatewayMemory";
+import WeeklyScheduleGateway, {ScheduledMass} from "../../infra/gateways/WeeklyScheduleGateway";
+import {scheduledMassesParoch} from "../../data/scheduledMasses";
 
 type FormMass = {
     day: number;
@@ -22,42 +22,40 @@ type FormMass = {
 
 export function FormMissas() {
     const location = useLocation();
-    const datesMonth = MonthFactory.create(location.state.mes, new Date().getFullYear()) as Month;
-    const massesByDay: MassGateway = new MassGatewayMemory();
+    const datesMonth = MonthFactory.create(location.state.mes, new Date().getFullYear());
+    const weeklyScheduleGateway: WeeklyScheduleGateway = new WeeklyScheduleGatewayMemory(scheduledMassesParoch);
 
-    const [semana, setSemana] = useState(1);
-    const [massesWeek, setMassesWeek] = useState<MassesByDay[]>([]);
+    const [week, setWeek] = useState(1);
+    const [weeklySchedule, setWeeklySchedule] = useState<ScheduledMass[]>([]);
 
     function handleClickNextWeek() {
-        if (semana < datesMonth.totalWeeks) {
-            setSemana(semana + 1);
+        if (week < datesMonth.totalWeeks) {
+            setWeek(week + 1);
         }
     }
 
     function handleClickPreviousWeek() {
-        if (semana > 1) {
-            setSemana(semana - 1);
+        if (week > 1) {
+            setWeek(week - 1);
         }
     }
 
     function combineObjects() {
         const forms: FormMass[] = [];
-        datesMonth.getWeek(semana).getAll().forEach((day) => {
-            massesWeek.forEach((massByDay) => {
-                if (day.getDayWeek() === massByDay.day) {
-                    massByDay.masses.forEach((mass) => {
+        datesMonth.getWeek(week).getAll().forEach((day) => {
+            weeklySchedule.forEach((scheduledMass) => {
+                if (day.getDayWeek() === scheduledMass.dayWeek) {
                         forms.push({
                             day: day.getDayNumber(),
                             month: day.getMonth(),
                             year: day.getYear(),
                             dayWeek: day.getDayWeek(),
                             dayWeekId: day.getDayWeekId(),
-                            time: mass.time,
-                            local: mass.local,
-                            vacancies: mass.vacancies,
-                            description: mass.description
+                            time: scheduledMass.time,
+                            local: scheduledMass.local,
+                            vacancies: scheduledMass.vacancies,
+                            description: scheduledMass.description
                         })
-                    })
                 }
             })
         })
@@ -65,23 +63,24 @@ export function FormMissas() {
     }
 
     useEffect(() => {
-        massesByDay.getAll().then(masses => {
-            setMassesWeek(masses);
+        weeklyScheduleGateway.getAll().then(scheduledMasses => {
+            setWeeklySchedule(scheduledMasses);
         })
     }, []);
 
     return (
         <section className={stylesApp.contentFlex}>
             <h1 className={styles.mes}>{datesMonth.getName()}</h1>
-            <h2 className={styles.semana}>{semana}º Semana</h2>
+            <h2 className={styles.semana}>{week}º Semana</h2>
 
             {
                 combineObjects().map((mass, key) => (
                     <FormMissa
                         date={`${mass.day}/${mass.month}/${mass.year}`}
                         dayMonth={mass.month}
+                        dayWeek={mass.dayWeek}
                         dayWeekId={mass.dayWeekId}
-                        weekId={semana}
+                        weekId={week}
                         time={mass.time}
                         nameCelebration={mass.description}
                         numVacancies={mass.vacancies}

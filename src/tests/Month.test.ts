@@ -84,7 +84,7 @@ describe('Month', () => {
         week.addDay(new DateCustom(4, 1, 2024));
         month.addWeek(week);
         month.addWeek(week2);
-        expect(() => month.getWeek(2)).toThrow("semana inválida")
+        expect(() => month.getWeek(2)).toBe("semana inválida")
     })
 
 
