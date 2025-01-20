@@ -5,6 +5,7 @@ import { daysWeek } from '../../../../constants/calendar';
 import { Vacancy } from '../vacancy/vacancy';
 
 type Props = {
+    dayWeek: string;
     dayWeekId: number;
     date: string;
     time: string;
@@ -16,7 +17,7 @@ type Props = {
 }
 
 export function FormMissa({
-    date, dayWeekId, time, nameCelebration, numVacancies, local, dayMonth, weekId
+    date, dayWeekId, dayWeek, time, nameCelebration, numVacancies, local, dayMonth, weekId
 }: Props) {
 
     const [celebration, setCelebration] = useState(nameCelebration);
@@ -44,7 +45,7 @@ export function FormMissa({
 
     return (
         <div className={styles.container}>
-            <span>{daysWeek[dayWeekId]}</span>
+            <span>{dayWeek}</span>
             <span>{date}</span>
             <span>{time} horas</span>
             <div className={styles.contain}>
