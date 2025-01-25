@@ -1,11 +1,12 @@
 import { create } from "zustand";
 import { Allocation, Allocations } from "../@types/allocation";
 import { isEqualAllocations } from "../utils/functions";
-import CoroinhaGateway from "../infra/gateways/coroinha/CoroinhaGateway";
-import CoroinhaGatewayMemory from "../infra/gateways/coroinha/CoroinhaGatewayMemory";
+import AltarServersGateway from "../infra/gateways/altarServers/AltarServersGateway";
+import AltarServersGatewayMemory from "../infra/gateways/altarServers/AltarServersGatewayMemory";
 import { Option } from "../@types/option";
+import {altarServersParoch} from "../data/altarServers";
 
-const options: CoroinhaGateway = new CoroinhaGatewayMemory();
+const options: AltarServersGateway = new AltarServersGatewayMemory(altarServersParoch);
 
 function getOpts(): Option[] {
     let opts: Option[] = [];
@@ -58,7 +59,7 @@ function vacancyHasAllocation(vacancy: Allocation, store: Allocations): string[]
 
 
 export const useAllocationStore = create<AllocationStore>()((set, get) => ({
-    allocations: getOpts().reduce((obj: Allocations, option) => { 
+    allocations: getOpts().reduce((obj: Allocations, option) => {
         obj[option.name] = []; return obj
     }, {}),
     to_allocate: (option, location) => set((state) => allocate(state, location, option)),

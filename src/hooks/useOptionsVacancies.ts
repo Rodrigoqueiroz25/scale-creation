@@ -2,24 +2,24 @@
 import { Allocation } from "../@types/allocation";
 import { Option } from "../@types/option";
 import { descriptionsVacancies } from "../data/descriptions-vacancies";
-import CoroinhaGateway from "../infra/gateways/coroinha/CoroinhaGateway";
+import AltarServersGateway from "../infra/gateways/altarServers/AltarServersGateway";
 import { isEqualAllocations } from "../utils/functions";
 import { useAllocationStore } from "./useAllocationsStore";
 
 
-export function useOptionsVacancies(options: CoroinhaGateway){
+export function useOptionsVacancies(options: AltarServersGateway){
 
     const { getAllocations } = useAllocationStore();
 
     /**
      * obter lista de nomes que posso exibir num select.
-     * 
+     *
      */
     async function getListOptions(vacancyRequester: Allocation): Promise<Option[]> {
         //let array: Option[] = OptionsFillVacancies;
-        let array: Option[] = await options.getAll(); 
+        let array: Option[] = await options.getAll();
         const allocations = getAllocations();
-    
+
         for (const key in allocations) {
             allocations[key].forEach((allocation) => {
                 if (((vacancyRequester.dayWeekId > 0 && vacancyRequester.dayWeekId < 7) && (allocation.dayWeekId > 0 && allocation.dayWeekId < 7)) ||
@@ -52,7 +52,7 @@ export function useOptionsVacancies(options: CoroinhaGateway){
     }
 
 
-    return { 
+    return {
         getListOptions, getListDescriptions
     };
 
