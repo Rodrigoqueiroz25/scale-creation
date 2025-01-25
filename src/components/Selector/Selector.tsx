@@ -1,38 +1,44 @@
-
-import { useEffect, useState } from 'react';
-import { Option } from '../../@types/option';
+import {useEffect, useState} from 'react';
 import styles from './styles.module.css';
+import {Option} from "../../@types/option";
 
 type Props = {
+    id: number;
     options: Option[];
-    optPreSelected: string;
-    onHandleSelector: (newValue: string, oldValue?: string) => void;
+    onHandleSelector: (id: number, newOption: Option, oldOption?: Option) => void;
+    optPreSelected?: Option;
 }
 
-export function Selector({ options, optPreSelected = ' ', onHandleSelector }: Props){
+export function Selector({id, options, onHandleSelector, optPreSelected}: Props) {
 
-    const [nameSelected, setNameSelected] = useState(' ');
+    const [optionSelected, setOptionSelected] = useState<Option>();
 
-    function handleChange(value: any) {
-        onHandleSelector(value, nameSelected);
-        setNameSelected(value);
+    function handleChange(optionStringify: string) {
+        const option: Option = JSON.parse(optionStringify);
+        onHandleSelector(id, option, optionSelected);
+        setOptionSelected(option);
     }
 
     useEffect(() => {
-        setNameSelected(optPreSelected);
+        if(optPreSelected)
+            setOptionSelected(optPreSelected);
     }, [optPreSelected]);
 
 
     return (
         <div className={styles.container}>
-            <select name='t' className={styles.select} onChange={(e) => handleChange(e.target.value)} value={nameSelected}>
-                <option key={-1} value=" "></option>
+            <select
+                name='t'
+                className={styles.select}
+                onChange={(e) => handleChange(e.target.value)}
+                value={JSON.stringify(optionSelected)}>
+                <option key={-1} value={-1}></option>
                 {
                     options.map((opt) => (
-                        <option key={opt.id} value={opt.name}>{opt.name}</option>
+                        <option key={opt.id} value={JSON.stringify(opt)}>{opt.name}</option>
                     ))
                 }
-            </select >
+            </select>
         </div>
     );
 }

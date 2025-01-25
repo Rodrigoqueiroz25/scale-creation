@@ -12,7 +12,7 @@ export function MonthSelection(){
     const navigate = useNavigate();
 
     function handleClickButton(){
-        navigate('/form-missas',{
+        navigate('/criar-escala',{
             state: {
                 mes: monthSelected
             }

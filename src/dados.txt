@@ -79,7 +79,7 @@ entradas do usuário:
 
 entradas de outro local:
 - data (classe geradora)
-- dia da semana, horário, quantidade de missas semanais (template vindo de backend)
+- dia da semana, horário, quantidade de missas semanais, local, numero de vagas (agenda semanal)
 
 saídas:
 uma lista com objetos que contém:
