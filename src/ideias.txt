@@ -406,3 +406,39 @@ de assign. a classe precisará ter conhecimento das missas agendadas.
 
 aqui entra uma coisa: a classe pode adicionar o altar server nas missas agendadas ou criaria um objeto com eles
 e tb adicionaria nas missas.
+
+Criei a classe.___/^ok
+
+
+_____
+a lógica interna ta funcionando.
+
+eu preciso que a lista de nomes de cada seletor seja modificada toda vez que um assign de altar server for feito.
+
+e como faço isso?
+
+1 - entrego uma lista sob medida para cada missa
+2 - entrego uma lista de nomes que não devem ser exibidos
+
+
+
+__________________________________
+eu vi um projeto em que toda a lógica da aplicação estava dentro de uma pasta application e/ou core.
+e para cada elemento que fica na tela, tinha uma classe que o representava.
+
+havia uma classe que orquestrava tudo. e que implementava as regras de negocio.
+
+e um context api fazia uso da classe principal.
+
+vamos ver se dá pra aplicar algo parecido no meu projeto.
+
+em tela eu tenho:
+
+1 - o formulário para escolher os altar servers
+2 - uma lista de formulários da semana.
+
+ele usou uma classe que orquestra, eu to chamando as coisas usando os componentes.
+
+
+
+

@@ -3,7 +3,7 @@ import styles from './MonthSelection.module.css';
 import stylesApp from '../../App.module.css';
 import { useNavigate } from 'react-router-dom';
 import { ChangeEvent, useState } from 'react';
-import {NameMonths} from "../../enum/NameMonths.enum";
+import {NameMonths} from "../../application/shared/enums/NameMonths.enum";
 
 export function MonthSelection(){
 

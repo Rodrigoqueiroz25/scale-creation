@@ -5,6 +5,12 @@
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/.devbox/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/.devbox/gen" />
+      <excludeFolder url="file://$MODULE_DIR$/.devbox/nix" />
+      <excludeFolder url="file://$MODULE_DIR$/.devbox/virtenv" />
+      <excludeFolder url="file://$MODULE_DIR$/coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/exclude" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

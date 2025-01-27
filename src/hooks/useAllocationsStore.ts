@@ -1,10 +1,10 @@
 import { create } from "zustand";
 import { Allocation, Allocations } from "../@types/allocation";
 import { isEqualAllocations } from "../utils/functions";
-import AltarServersGateway from "../infra/gateways/altarServers/AltarServersGateway";
-import AltarServersGatewayMemory from "../infra/gateways/altarServers/AltarServersGatewayMemory";
+import AltarServersGateway from "../application/infra/gateways/altarServers/AltarServersGateway";
+import AltarServersGatewayMemory from "../application/infra/gateways/altarServers/AltarServersGatewayMemory";
 import { Option } from "../@types/option";
-import {altarServersParoch} from "../data/altarServers";
+import {altarServersParoch} from "../application/shared/data/altarServers";
 
 const options: AltarServersGateway = new AltarServersGatewayMemory(altarServersParoch);
 
