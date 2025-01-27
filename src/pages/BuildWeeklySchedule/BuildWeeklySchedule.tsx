@@ -2,12 +2,13 @@ import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import styles from "./BuildWeeklySchedule.module.css";
 import stylesApp from '../../App.module.css';
-import MonthFactory from "../../helpers/MonthFactory";
-import {PlannedMassGatewayMemory} from "../../infra/gateways/plannedMass/PlannedMassGatewayMemory";
-import PlannedMassGateway from "../../infra/gateways/plannedMass/PlannedMassGateway";
-import {plannedMasses} from "../../data/plannedMassesParish";
+import MonthFactory from "../../application/utils/MonthFactory";
+import {PlannedMassGatewayMemory} from "../../application/infra/gateways/plannedMass/PlannedMassGatewayMemory";
+import PlannedMassGateway from "../../application/infra/gateways/plannedMass/PlannedMassGateway";
+import {plannedMasses} from "../../application/shared/data/plannedMassesParish";
 import {MassForm} from "./components/MassForm/MassForm";
-import WeeklyMassSchedule from "../../entities/WeeklyMassSchedule";
+import WeeklyMassSchedule from "../../application/core/entities/WeeklyMassSchedule";
+import AltarServerWeeklySchedule from "../../application/core/entities/AltarServerWeeklySchedule";
 
 
 export function BuildWeeklySchedule() {
@@ -16,7 +17,8 @@ export function BuildWeeklySchedule() {
     const plannedMassGateway: PlannedMassGateway = new PlannedMassGatewayMemory(plannedMasses);
 
     const [week, setWeek] = useState(1);
-    const [weeklyMassSchedule, setWeeklyMassSchedule] = useState<WeeklyMassSchedule>(new WeeklyMassSchedule([], 0));
+    const [weeklyMassSchedule, setWeeklyMassSchedule] = useState<WeeklyMassSchedule>();
+    const [altarServerWeeklySchedule, setAltarServerWeeklySchedule] = useState<AltarServerWeeklySchedule>({} as AltarServerWeeklySchedule);
 
     function handleClickNextWeek() {
         if (week < datesMonth.totalWeeks) {
@@ -39,13 +41,18 @@ export function BuildWeeklySchedule() {
         //ver se já tem agendamentos persistidos para a semana. faz um get com id da semana.
     }, [week]);
 
+    useEffect(() => {
+        if(weeklyMassSchedule)
+            setAltarServerWeeklySchedule(new AltarServerWeeklySchedule(weeklyMassSchedule));
+    }, [weeklyMassSchedule]);
+
     return (
         <section className={stylesApp.contentFlex}>
             <h1 className={styles.mes}>{datesMonth.getName()}</h1>
             <h2 className={styles.semana}>{week}º Semana</h2>
             {
-                weeklyMassSchedule.massesScheduledForWeek.map((mass, key) => (
-                    <MassForm key={key} mass={mass} weeklyMassSchedule={weeklyMassSchedule}/>
+                weeklyMassSchedule?.getSchedule().map((mass, key) => (
+                    <MassForm key={key} mass={mass} altarServerMassSchedule={altarServerWeeklySchedule}/>
                 ))
             }
             <div className={`${stylesApp.cardContainer}`}>

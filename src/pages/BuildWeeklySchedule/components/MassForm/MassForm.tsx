@@ -1,19 +1,19 @@
 import {useState, useEffect} from 'react';
 import styles from './style.module.css';
-import AltarServersGateway from "../../../../infra/gateways/altarServers/AltarServersGateway";
-import AltarServersGatewayMemory from "../../../../infra/gateways/altarServers/AltarServersGatewayMemory";
-import {altarServersParoch} from "../../../../data/altarServers";
-import WeeklyMassSchedule from "../../../../entities/WeeklyMassSchedule";
-import Mass from "../../../../entities/Mass";
+import AltarServersGateway from "../../../../application/infra/gateways/altarServers/AltarServersGateway";
+import AltarServersGatewayMemory from "../../../../application/infra/gateways/altarServers/AltarServersGatewayMemory";
+import {altarServersParoch} from "../../../../application/shared/data/altarServers";
+import Mass from "../../../../application/core/entities/Mass";
 import {Selector} from "../../../../components/Selector/Selector";
 import {Option} from "../../../../@types/option";
+import AltarServerWeeklySchedule from "../../../../application/core/entities/AltarServerWeeklySchedule";
 
 type Props = {
     mass: Mass;
-    weeklyMassSchedule: WeeklyMassSchedule;
+    altarServerMassSchedule: AltarServerWeeklySchedule;
 }
 
-export function MassForm({mass, weeklyMassSchedule}: Props) {
+export function MassForm({mass, altarServerMassSchedule}: Props) {
     const altarServersGateway: AltarServersGateway = new AltarServersGatewayMemory(altarServersParoch);
 
     const [celebration, setCelebration] = useState(mass.getDescription());
@@ -35,9 +35,9 @@ export function MassForm({mass, weeklyMassSchedule}: Props) {
         //logica para registrar
         if(oldOption) {
             console.log(oldOption);
-            weeklyMassSchedule.cancelAssignAltarServer(id, mass.getDate(), mass.getTime(), mass.getLocal());
+            altarServerMassSchedule.cancelAssignAltarServer(id, mass.getDate(), mass.getTime(), mass.getLocal());
         }
-        weeklyMassSchedule.assignToMass(newOption, id, mass.getDate(), mass.getTime(), mass.getLocal());
+        altarServerMassSchedule.assignToMass(newOption, id, mass.getDate(), mass.getTime(), mass.getLocal());
     }
 
     function renderSelects(altarServers: Option[]) {
