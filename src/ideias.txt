@@ -441,4 +441,43 @@ ele usou uma classe que orquestra, eu to chamando as coisas usando os componente
 
 
 
+________
+eu preciso agora modificar a lista de nomes conforme os assingments dos altar servers.
+basicamente as mesmas regras.
 
+classe se chamaria? AltarServerProvider
+
+
+eu vou usar tanto para alocar quanto para obter lista as mesmas regras (se é domingo ou está alocado na semana).
+
+ai eu poderia usar as regras para obter a lista, da mesma forma quando eu quero assign.
+
+a medida que diz que pode ser adicionado, eu coloco na lista, quando não puder, não coloco.
+assim as regras são reaproveitadas.
+
+funcionou.....
+
+os nomes passam no teste das regras antes de ir para a lista de nomes que podem ser adicionados.
+
+mas tem um problema? o nome selecionado acaba sumindo da lista.
+
+seria interessante ter os selects controlados. usar selects controlados.
+ou seja, que o select seja setado com o valor alocado naquele slot que ele representa.
+
+o select representa o slot da missa.
+
+funcionou passando para o select o valor do slot do objeto missa.
+
+_____
+ta selecionando certinho e ta controlado.
+
+
+__________
+proximo passo:
+
+como eu faço para desselecionar?
+como implementar a opção vazia?
+
+a opção vazia tem valor -1 e deve dizer que deve apenas remover altarServer e não adicionar.
+
+Feito....

@@ -1,8 +1,8 @@
 
 import { Allocation } from "../@types/allocation";
 import { Option } from "../@types/option";
-import { descriptionsVacancies } from "../application/shared/data/descriptions-vacancies";
-import AltarServersGateway from "../application/infra/gateways/altarServers/AltarServersGateway";
+import { descriptionsVacancies } from "../app/shared/data/descriptions-vacancies";
+import AltarServersGateway from "../app/infra/gateways/altarServers/AltarServersGateway";
 import { isEqualAllocations } from "../utils/functions";
 import { useAllocationStore } from "./useAllocationsStore";
 

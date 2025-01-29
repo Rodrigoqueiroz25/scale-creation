@@ -1,7 +1,8 @@
-import DateCustom from "../types/DateCustom";
+import DateCustom from "./DateCustom";
 import {PlannedMassRecord} from "../../infra/gateways/plannedMass/PlannedMassGateway";
-import Week from "../types/Week";
-import Mass from "./Mass";
+import Week from "./Week";
+import Mass, {DateTimeLocal} from "./Mass";
+import {DaysWeek} from "../../shared/enums/DaysWeek.enum";
 
 export default class WeeklyMassSchedule {
 
@@ -28,6 +29,19 @@ export default class WeeklyMassSchedule {
         return this.scheduledMasses;
     }
 
+    public getMassesByDay(day: DaysWeek): Mass[] {
+        return this.scheduledMasses.filter(mass => mass.getDate().getDayWeek() === day);
+    }
+
+    public getMassesBetweenDays(startDay: DaysWeek, endDay: DaysWeek) {
+        const days = Object.values(DaysWeek);
+        const rangeDays = days.slice(days.indexOf(startDay), days.indexOf(endDay) + 1);
+        return rangeDays.reduce((result, day) => {
+            result[day] = this.getMassesByDay(day);
+            return result;
+        }, {} as Record<DaysWeek, Mass[]>);
+    }
+
     public unscheduleMass(date: DateCustom, time: string, local: string) {
 
     }
@@ -36,8 +50,12 @@ export default class WeeklyMassSchedule {
 
     }
 
-    public getScheduledMass(date: DateCustom, time: string, local: string): Mass | undefined {
-        return this.scheduledMasses.find(mass => mass.isMatch(date, time, local));
+    // public getScheduledMass(date: DateCustom, time: string, local: string): Mass | undefined {
+    //     return this.scheduledMasses.find(mass => mass.isMatch(date, time, local));
+    // }
+
+    public getScheduledMass(massId: DateTimeLocal): Mass | undefined {
+        return this.scheduledMasses.find(mass => mass.isMatch(massId));
     }
 
 }

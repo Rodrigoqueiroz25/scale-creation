@@ -4,11 +4,11 @@ import AltarServersGateway from "./AltarServersGateway";
 
 export default class AltarServersGatewayMemory implements AltarServersGateway {
 
-    constructor(private readonly coroinhas: Option[]) {
+    constructor(private readonly altarServers: Option[]) {
     }
 
     public getAll(): Promise<Option[]> {
-        return Promise.resolve(this.coroinhas);
+        return Promise.resolve(this.altarServers);
     }
 
 }

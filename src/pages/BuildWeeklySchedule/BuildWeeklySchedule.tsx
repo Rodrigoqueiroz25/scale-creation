@@ -2,23 +2,33 @@ import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import styles from "./BuildWeeklySchedule.module.css";
 import stylesApp from '../../App.module.css';
-import MonthFactory from "../../application/utils/MonthFactory";
-import {PlannedMassGatewayMemory} from "../../application/infra/gateways/plannedMass/PlannedMassGatewayMemory";
-import PlannedMassGateway from "../../application/infra/gateways/plannedMass/PlannedMassGateway";
-import {plannedMasses} from "../../application/shared/data/plannedMassesParish";
+import MonthFactory from "../../app/domain/factories/MonthFactory";
+import {PlannedMassGatewayMemory} from "../../app/infra/gateways/plannedMass/PlannedMassGatewayMemory";
+import PlannedMassGateway from "../../app/infra/gateways/plannedMass/PlannedMassGateway";
+import {plannedMasses} from "../../app/shared/data/plannedMassesParish";
 import {MassForm} from "./components/MassForm/MassForm";
-import WeeklyMassSchedule from "../../application/core/entities/WeeklyMassSchedule";
-import AltarServerWeeklySchedule from "../../application/core/entities/AltarServerWeeklySchedule";
+import WeeklyMassSchedule from "../../app/domain/entities/WeeklyMassSchedule";
+import WeeklyAltarServerMassAssignmentManager from "../../app/application/usecases/WeeklyAltarServerMassAssignmentManager";
+import AltarServerList from "../../app/application/services/AltarServerList";
+import AltarServersGateway from "../../app/infra/gateways/altarServers/AltarServersGateway";
+import AltarServersGatewayMemory from "../../app/infra/gateways/altarServers/AltarServersGatewayMemory";
+import {altarServersParoch} from "../../app/shared/data/altarServers";
 
 
 export function BuildWeeklySchedule() {
+
     const location = useLocation();
+
     const datesMonth = MonthFactory.create(location.state.mes, new Date().getFullYear());
     const plannedMassGateway: PlannedMassGateway = new PlannedMassGatewayMemory(plannedMasses);
+    const altarServersGateway: AltarServersGateway = new AltarServersGatewayMemory(altarServersParoch);
 
     const [week, setWeek] = useState(1);
+    const [renderr, setRenderr] = useState(true);
     const [weeklyMassSchedule, setWeeklyMassSchedule] = useState<WeeklyMassSchedule>();
-    const [altarServerWeeklySchedule, setAltarServerWeeklySchedule] = useState<AltarServerWeeklySchedule>({} as AltarServerWeeklySchedule);
+    const [altarServerMassAssignmentManager, setAltarServerMassAssignmentManager] = useState<WeeklyAltarServerMassAssignmentManager>({} as WeeklyAltarServerMassAssignmentManager);
+    const [altarServerList, setAltarServerList] = useState<AltarServerList>();
+
 
     function handleClickNextWeek() {
         if (week < datesMonth.totalWeeks) {
@@ -34,26 +44,48 @@ export function BuildWeeklySchedule() {
         //chama método pra persistir agendamentos da semana atual.
     }
 
+    function rerender(){
+        setRenderr(!renderr);
+    }
+
+
     useEffect(() => {
-        plannedMassGateway.getAll().then(plannedMasses => {
+        const getPlannedMasses = async () => {
+            let plannedMasses = await plannedMassGateway.getAll();
             setWeeklyMassSchedule(WeeklyMassSchedule.create(datesMonth.getWeek(week), plannedMasses));
-        });
+        }
+        getPlannedMasses();
         //ver se já tem agendamentos persistidos para a semana. faz um get com id da semana.
     }, [week]);
 
+
     useEffect(() => {
-        if(weeklyMassSchedule)
-            setAltarServerWeeklySchedule(new AltarServerWeeklySchedule(weeklyMassSchedule));
+        const getAltarServers = async (schedule: WeeklyMassSchedule) => {
+            let altarServers = await altarServersGateway.getAll();
+            setAltarServerList(new AltarServerList(altarServers, schedule));
+        }
+        if(weeklyMassSchedule){
+            getAltarServers(weeklyMassSchedule);
+            setAltarServerMassAssignmentManager(new WeeklyAltarServerMassAssignmentManager(weeklyMassSchedule));
+        }
     }, [weeklyMassSchedule]);
+
 
     return (
         <section className={stylesApp.contentFlex}>
             <h1 className={styles.mes}>{datesMonth.getName()}</h1>
             <h2 className={styles.semana}>{week}º Semana</h2>
             {
-                weeklyMassSchedule?.getSchedule().map((mass, key) => (
-                    <MassForm key={key} mass={mass} altarServerMassSchedule={altarServerWeeklySchedule}/>
-                ))
+                weeklyMassSchedule && altarServerList ?
+                    weeklyMassSchedule.getSchedule().map((mass, key) => (
+                        <MassForm
+                            func={rerender}
+                            key={key}
+                            mass={mass}
+                            altarServerMassAssignment={altarServerMassAssignmentManager}
+                            altarServerList={altarServerList.getList(mass)}
+                        />
+                    )) : null
             }
             <div className={`${stylesApp.cardContainer}`}>
                 <button

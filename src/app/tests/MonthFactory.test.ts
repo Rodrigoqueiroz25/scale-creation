@@ -1,7 +1,7 @@
 
 import {describe} from "@jest/globals";
-import MonthFactory from "../utils/MonthFactory";
-import Month from "../core/types/Month";
+import MonthFactory from "../domain/factories/MonthFactory";
+import Month from "../domain/entities/Month";
 import {NameMonths} from "../shared/enums/NameMonths.enum";
 
 //year 2024

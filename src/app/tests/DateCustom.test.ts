@@ -1,5 +1,5 @@
 import { notEqual } from "assert";
-import DateCustom from "../core/types/DateCustom";
+import DateCustom from "../domain/entities/DateCustom";
 
 let date: DateCustom;
 

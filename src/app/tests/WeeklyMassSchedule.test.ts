@@ -1,11 +1,11 @@
-
 import PlannedMassGateway from "../infra/gateways/plannedMass/PlannedMassGateway";
-import WeeklyMassSchedule from "../core/entities/WeeklyMassSchedule";
-import Month from "../core/types/Month";
-import MonthFactory from "../utils/MonthFactory";
+import WeeklyMassSchedule from "../domain/entities/WeeklyMassSchedule";
+import Month from "../domain/entities/Month";
+import MonthFactory from "../domain/factories/MonthFactory";
 import {NameMonths} from "../shared/enums/NameMonths.enum";
 import {PlannedMassGatewayMemory} from "../infra/gateways/plannedMass/PlannedMassGatewayMemory";
 import {plannedMasses} from "../shared/data/plannedMassesParish";
+import {DaysWeek} from "../shared/enums/DaysWeek.enum";
 
 describe('Missas agendadas para primeira semana de janeiro de 2025', () => {
 
@@ -171,5 +171,8 @@ describe('Missas agendadas para primeira semana de janeiro de 2025', () => {
         );
     });
 
+    test("obtem missas dentro de um range de dias entre terça e quinta", () => {
+        expect(weeklySchedule.getMassesBetweenDays(DaysWeek.TERCA, DaysWeek.QUINTA)).toEqual("")
+    });
 
 })
