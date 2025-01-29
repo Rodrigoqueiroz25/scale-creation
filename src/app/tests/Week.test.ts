@@ -1,7 +1,7 @@
 
 import {describe} from "@jest/globals";
-import Week from "../core/types/Week";
-import DateCustom from "../core/types/DateCustom";
+import Week from "../domain/entities/Week";
+import DateCustom from "../domain/entities/DateCustom";
 
 let week: Week;
 

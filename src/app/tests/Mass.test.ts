@@ -1,5 +1,5 @@
-import Mass from "../core/entities/Mass";
-import DateCustom from "../core/types/DateCustom";
+import Mass, {DateTimeLocal} from "../domain/entities/Mass";
+import DateCustom from "../domain/entities/DateCustom";
 
 describe('Mass', () => {
 
@@ -70,13 +70,13 @@ describe('Mass', () => {
 
     test("remove altar server da missa", () => {
         mass.assignAltarServer({name: "alef", id: 1}, 1);
-        mass.cancelAssignAltarServer(1);
+        mass.unassignAltarServer(1);
         expect(mass.getAltarServer(1)).toEqual(undefined);
     });
 
     test("não remove altar server de slot vazio", () => {
         mass.assignAltarServer({name: "alef", id: 1}, 1);
-        mass.cancelAssignAltarServer(2);
+        mass.unassignAltarServer(2);
         expect(mass.getAltarServer(2)).toEqual(undefined);
     });
 
@@ -94,19 +94,39 @@ describe('Mass', () => {
 
 
     test("verdadeiro se a data 1/1/2025, 19:00, matriz correspondem ao objeto missa", () => {
-        expect(mass.isMatch(new DateCustom(1,1,2025), "19:00", "matriz")).toEqual(true);
+        let massId: DateTimeLocal = {
+            date: new DateCustom(1,1,2025),
+            local: "matriz",
+            time: "19:00"
+        }
+        expect(mass.isMatch(massId)).toEqual(true);
     })
 
     test("falso se a data 2/1/2025, 19:00, matriz não correspondem ao objeto missa", () => {
-        expect(mass.isMatch(new DateCustom(2,1,2025), "19:00", "matriz")).toEqual(false);
+        let massId: DateTimeLocal = {
+            date: new DateCustom(2,1,2025),
+            local: "matriz",
+            time: "19:00"
+        }
+        expect(mass.isMatch(massId)).toEqual(false);
     })
 
     test("falso se a data 1/1/2025, 17:00, matriz não correspondem ao objeto missa", () => {
-        expect(mass.isMatch(new DateCustom(1,1,2025), "17:00", "matriz")).toEqual(false);
+        let massId: DateTimeLocal = {
+            date: new DateCustom(1,1,2025),
+            local: "matriz",
+            time: "17:00"
+        }
+        expect(mass.isMatch(massId)).toEqual(false);
     })
 
     test("falso se a data 1/1/2025, 19:00, capela não correspondem ao objeto missa", () => {
-        expect(mass.isMatch(new DateCustom(1,1,2025), "19:00", "capela")).toEqual(false);
+        let massId: DateTimeLocal = {
+            date: new DateCustom(1,1,2025),
+            local: "capela",
+            time: "19:00"
+        }
+        expect(mass.isMatch(massId)).toEqual(false);
     })
 
     //more tests

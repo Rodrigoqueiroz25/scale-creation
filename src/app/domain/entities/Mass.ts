@@ -1,6 +1,12 @@
-import DateCustom from "../types/DateCustom";
+import DateCustom from "./DateCustom";
 import {Option} from "../../../@types/option";
-import {AltarServerRecord} from "../types/AltarServerRecord";
+import {AltarServerRecord} from "./AltarServerRecord";
+
+export type DateTimeLocal = {
+    date: DateCustom,
+    time: string,
+    local: string
+}
 
 export default class Mass {
 
@@ -30,7 +36,7 @@ export default class Mass {
             this.altarServers.set(idSlot,altarServer);
     }
 
-    public cancelAssignAltarServer(idSlot: number) {
+    public unassignAltarServer(idSlot: number) {
         this.altarServers.delete(idSlot);
     }
 
@@ -62,8 +68,16 @@ export default class Mass {
         return this.numVacancies;
     }
 
-    public isMatch(date: DateCustom, time: string, local: string): boolean {
-        return DateCustom.isEqual(date, this.date) && this.time === time && this.local === local;
+    public getMassId(): DateTimeLocal{
+        return {
+            date: this.date,
+            time: this.time,
+            local: this.local
+        }
+    }
+
+    public isMatch(massId: DateTimeLocal): boolean {
+        return DateCustom.isEqual(massId.date, this.date) && this.time === massId.time && this.local === massId.local;
     }
 
     public isAltarServerAssign(id: number): boolean {

@@ -1,25 +1,22 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import styles from './style.module.css';
-import AltarServersGateway from "../../../../application/infra/gateways/altarServers/AltarServersGateway";
-import AltarServersGatewayMemory from "../../../../application/infra/gateways/altarServers/AltarServersGatewayMemory";
-import {altarServersParoch} from "../../../../application/shared/data/altarServers";
-import Mass from "../../../../application/core/entities/Mass";
+import Mass from "../../../../app/domain/entities/Mass";
 import {Selector} from "../../../../components/Selector/Selector";
+
+import WeeklyAltarServerMassAssignmentManager from "../../../../app/application/usecases/WeeklyAltarServerMassAssignmentManager";
 import {Option} from "../../../../@types/option";
-import AltarServerWeeklySchedule from "../../../../application/core/entities/AltarServerWeeklySchedule";
 
 type Props = {
     mass: Mass;
-    altarServerMassSchedule: AltarServerWeeklySchedule;
+    altarServerMassAssignment: WeeklyAltarServerMassAssignmentManager;
+    altarServerList: Option[];
+    func: () => void;
 }
 
-export function MassForm({mass, altarServerMassSchedule}: Props) {
-    const altarServersGateway: AltarServersGateway = new AltarServersGatewayMemory(altarServersParoch);
+export function MassForm({mass, altarServerMassAssignment, altarServerList, func}: Props) {
 
     const [celebration, setCelebration] = useState(mass.getDescription());
     const [vacancies, setVacancies] = useState<number>(mass.getNumVacancies());
-    const [altarServers, setAltarServers] = useState<Option[]>([]);
-
 
     function handleClickPlus() {
         setVacancies(vacancies + 1);
@@ -32,12 +29,12 @@ export function MassForm({mass, altarServerMassSchedule}: Props) {
     }
     
     function altarServerChosen(id: number, newOption: Option, oldOption?: Option) {
-        //logica para registrar
         if(oldOption) {
-            console.log(oldOption);
-            altarServerMassSchedule.cancelAssignAltarServer(id, mass.getDate(), mass.getTime(), mass.getLocal());
+            altarServerMassAssignment.unassignFromMass(id, mass.getMassId());
         }
-        altarServerMassSchedule.assignToMass(newOption, id, mass.getDate(), mass.getTime(), mass.getLocal());
+        if (newOption)
+            altarServerMassAssignment.assignToMass(newOption, id, mass.getMassId());
+        func()
     }
 
     function renderSelects(altarServers: Option[]) {
@@ -49,18 +46,12 @@ export function MassForm({mass, altarServerMassSchedule}: Props) {
                     id={index}
                     options={altarServers}
                     onHandleSelector={altarServerChosen}
+                    optPreSelected={mass.getAltarServer(index)}
                 />
             )
         }
         return selects;
     }
-
-    useEffect(() => {
-        altarServersGateway.getAll().then(altarServers => {
-            setAltarServers(altarServers);
-        })
-    },[])
-
 
     return (
         <div className={styles.container}>
@@ -69,7 +60,7 @@ export function MassForm({mass, altarServerMassSchedule}: Props) {
             <span>{mass.getTime()} horas</span>
             <span>{mass.getLocal()}</span>
             <div className={styles.contain}>
-                <div className={styles.selects}>{renderSelects(altarServers)}</div>
+                <div className={styles.selects}>{renderSelects(altarServerList)}</div>
                 <div className={styles.buttons}>
                     <button type='button' onClick={handleClickPlus}>+</button>
                     <button type='button' onClick={handleClickLess}>-</button>

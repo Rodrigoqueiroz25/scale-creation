@@ -1,7 +1,7 @@
 import {NameMonths} from "../shared/enums/NameMonths.enum";
-import Month from "../core/types/Month";
-import Week from "../core/types/Week";
-import DateCustom from "../core/types/DateCustom";
+import Month from "../domain/entities/Month";
+import Week from "../domain/entities/Week";
+import DateCustom from "../domain/entities/DateCustom";
 
 let month: Month;
 
