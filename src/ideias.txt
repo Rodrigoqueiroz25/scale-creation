@@ -481,3 +481,14 @@ como implementar a opção vazia?
 a opção vazia tem valor -1 e deve dizer que deve apenas remover altarServer e não adicionar.
 
 Feito....
+
+_________
+qual proximo passo?
+
+vamos testar como ta selecionando.
+
+ta indo bem.
+
+mas o q foi selecionado quando avanço e volto não aparece selecionado o que foi anteriormente.
+
+para isso eu preciso salvar o conteúdo? sim.

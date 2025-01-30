@@ -30,10 +30,10 @@ export function MassForm({mass, altarServerMassAssignment, altarServerList, func
     
     function altarServerChosen(id: number, newOption: Option, oldOption?: Option) {
         if(oldOption) {
-            altarServerMassAssignment.unassignFromMass(id, mass.getMassId());
+            altarServerMassAssignment.unassignFromMass(id, mass.getDateTimeLocal());
         }
         if (newOption)
-            altarServerMassAssignment.assignToMass(newOption, id, mass.getMassId());
+            altarServerMassAssignment.assignToMass(newOption, id, mass.getDateTimeLocal());
         func()
     }
 
@@ -42,7 +42,7 @@ export function MassForm({mass, altarServerMassAssignment, altarServerList, func
         for (let index = 1; index <= vacancies; index++) {
             selects.push(
                 <Selector
-                    key={index}
+                    key={`${mass.id}-${index}`}
                     id={index}
                     options={altarServers}
                     onHandleSelector={altarServerChosen}
