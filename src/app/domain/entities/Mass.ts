@@ -68,12 +68,16 @@ export default class Mass {
         return this.numVacancies;
     }
 
-    public getMassId(): DateTimeLocal{
+    public getDateTimeLocal(): DateTimeLocal{
         return {
             date: this.date,
             time: this.time,
             local: this.local
         }
+    }
+
+    public get id(): string {
+        return `${this.getDate().getDayNumber()}/${this.getDate().getMonth()}/${this.getDate().getYear()}-${this.local}-${this.time}`;
     }
 
     public isMatch(massId: DateTimeLocal): boolean {

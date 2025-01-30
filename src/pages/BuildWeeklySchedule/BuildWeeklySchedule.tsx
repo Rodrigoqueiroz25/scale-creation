@@ -77,10 +77,10 @@ export function BuildWeeklySchedule() {
             <h2 className={styles.semana}>{week}º Semana</h2>
             {
                 weeklyMassSchedule && altarServerList ?
-                    weeklyMassSchedule.getSchedule().map((mass, key) => (
+                    weeklyMassSchedule.getSchedule().map((mass) => (
                         <MassForm
                             func={rerender}
-                            key={key}
+                            key={mass.id}
                             mass={mass}
                             altarServerMassAssignment={altarServerMassAssignmentManager}
                             altarServerList={altarServerList.getList(mass)}
