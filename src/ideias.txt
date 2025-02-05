@@ -70,7 +70,7 @@ tabela missas: id, dia, horario
 tabela coroinha: id, nome, (disponibilidade)
 tabela coroinhas alocados: idMissa, idCoroinha, data, vaga.
 
-...vamos tentar colocar em xml. 
+...vamos tentar colocar em xml.
 como ler um xml no javascript?
 
 
@@ -95,7 +95,7 @@ Casos de uso::
 
 
 
-as telas são os use cases. use case é um comportamento oferecido ao usuário. 
+as telas são os use cases. use case é um comportamento oferecido ao usuário.
 ele definiu classes que cuidam disso exclusivamente.
 essas classes usam um objeto de dominio que contem as regras de dominio.
     cuida de orquestrar coisas como obter dados, manipular e salvar se preciso.
@@ -165,11 +165,11 @@ _____
 PRIMEIRA forma
 - recebendo todos os dados do usuário.
 
-eu exibo um botão para adicionar missa e o usuário clica nele. 
+eu exibo um botão para adicionar missa e o usuário clica nele.
 aparece formMissa e o usuário insere o dia da semana, a data, horario, nomes dos escalados e descrição.
 
 e assim por diante em todas as missas da semana e depois clicar em "próxima semana".
- 
+
 eu preciso me preocupar com:
 - inserir uma missa
 - me preocupar com as datas
@@ -178,7 +178,7 @@ eu preciso me preocupar com:
 - saber quais pessoas poderia inserir em uma dada missa
 - colocar uma descrição.
 
-contras: desse jeito é como fazer manualmente, a unica coisa que seria automatizada seria 
+contras: desse jeito é como fazer manualmente, a unica coisa que seria automatizada seria
 a formatação final do arquivo.
 
 
@@ -186,15 +186,15 @@ _______
 SEGUNDA FORMA
 - usando template das missas semanais
 
-ao entrar na tela, aparece formMissa de acordo com o template. 
-o usuário não mais insere o dia da semana, horario, descrição e tem um numero de vagas específico que é fixo. 
+ao entrar na tela, aparece formMissa de acordo com o template.
+o usuário não mais insere o dia da semana, horario, descrição e tem um numero de vagas específico que é fixo.
 
 eu preciso me preocupar com:
 - me preocupar com as datas
 - saber quais pessoas poderia inserir em uma dada missa
 - colocar uma descrição.
 
-contras: 
+contras:
     não preciso ficar inserindo as missas, mas preciso me preocupar em associar uma data a cada missa
     e tb as pessoas que podem servir naquele dia e data.
     o usuário tem que corrigir a primeira e ultima semana do mês, excluindo missas.
@@ -492,3 +492,5 @@ ta indo bem.
 mas o q foi selecionado quando avanço e volto não aparece selecionado o que foi anteriormente.
 
 para isso eu preciso salvar o conteúdo? sim.
+
+vamos criar uma classe repository para usar o indexedDB. o que irei armazenar? o weeklyMassSchedule.

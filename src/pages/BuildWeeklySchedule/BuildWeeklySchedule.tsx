@@ -13,15 +13,19 @@ import AltarServerList from "../../app/application/services/AltarServerList";
 import AltarServersGateway from "../../app/infra/gateways/altarServers/AltarServersGateway";
 import AltarServersGatewayMemory from "../../app/infra/gateways/altarServers/AltarServersGatewayMemory";
 import {altarServersParoch} from "../../app/shared/data/altarServers";
+import WeeklyMassScheduleRepositoryIDB from "../../app/infra/repositories/WeeklyMassScheduleRepositoryIDB";
+import IndexedDBAdapter from "../../app/infra/adapters/indexeddb/IndexedDBAdapter";
+import IndexedDBAdapterNative from "../../app/infra/adapters/indexeddb/IndexedDBAdapterNative";
 
 
 export function BuildWeeklySchedule() {
 
     const location = useLocation();
-
     const datesMonth = MonthFactory.create(location.state.mes, new Date().getFullYear());
     const plannedMassGateway: PlannedMassGateway = new PlannedMassGatewayMemory(plannedMasses);
     const altarServersGateway: AltarServersGateway = new AltarServersGatewayMemory(altarServersParoch);
+    const indexedDBAdapter: IndexedDBAdapter<WeeklyMassSchedule> = new IndexedDBAdapterNative("dbSchedules", 1, "schedules");
+    const weekScheduleRepository: WeeklyMassScheduleRepositoryIDB = new WeeklyMassScheduleRepositoryIDB(indexedDBAdapter);
 
     const [week, setWeek] = useState(1);
     const [renderr, setRenderr] = useState(true);
@@ -29,19 +33,22 @@ export function BuildWeeklySchedule() {
     const [altarServerMassAssignmentManager, setAltarServerMassAssignmentManager] = useState<WeeklyAltarServerMassAssignmentManager>({} as WeeklyAltarServerMassAssignmentManager);
     const [altarServerList, setAltarServerList] = useState<AltarServerList>();
 
-
-    function handleClickNextWeek() {
+    async function handleClickNextWeek() {
         if (week < datesMonth.totalWeeks) {
             setWeek(week + 1);
         }
         //chama método pra persistir agendamentos.
+        if(weeklyMassSchedule)
+            await weekScheduleRepository.save(weeklyMassSchedule)
     }
 
-    function handleClickPreviousWeek() {
+    async function handleClickPreviousWeek() {
         if (week > 1) {
             setWeek(week - 1);
         }
         //chama método pra persistir agendamentos da semana atual.
+        if(weeklyMassSchedule)
+          console.log(await weekScheduleRepository.get(week - 1))
     }
 
     function rerender(){
