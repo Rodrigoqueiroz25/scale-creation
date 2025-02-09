@@ -19,7 +19,6 @@ export default class WeeklyAltarServerMassAssignmentManager {
         const assignmentRule = this.assignmentManager.getRule(mass);
         if (assignmentRule.canAssign(altarServer))
             mass.assignAltarServer(altarServer, idSlot);
-        console.log(mass);
     }
 
     public unassignFromMass(idSlot: number, massId: DateTimeLocal): void {

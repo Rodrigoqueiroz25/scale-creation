@@ -24,7 +24,7 @@ export function BuildWeeklySchedule() {
     const datesMonth = MonthFactory.create(location.state.mes, new Date().getFullYear());
     const plannedMassGateway: PlannedMassGateway = new PlannedMassGatewayMemory(plannedMasses);
     const altarServersGateway: AltarServersGateway = new AltarServersGatewayMemory(altarServersParoch);
-    const indexedDBAdapter: IndexedDBAdapter<WeeklyMassSchedule> = new IndexedDBAdapterNative("dbSchedules", 1, "schedules");
+    const indexedDBAdapter: IndexedDBAdapter = new IndexedDBAdapterNative("dbSchedules", 1, "schedules");
     const weekScheduleRepository: WeeklyMassScheduleRepositoryIDB = new WeeklyMassScheduleRepositoryIDB(indexedDBAdapter);
 
     const [week, setWeek] = useState(1);
@@ -37,7 +37,6 @@ export function BuildWeeklySchedule() {
         if (week < datesMonth.totalWeeks) {
             setWeek(week + 1);
         }
-        //chama método pra persistir agendamentos.
         if(weeklyMassSchedule)
             await weekScheduleRepository.save(weeklyMassSchedule)
     }
@@ -46,9 +45,8 @@ export function BuildWeeklySchedule() {
         if (week > 1) {
             setWeek(week - 1);
         }
-        //chama método pra persistir agendamentos da semana atual.
         if(weeklyMassSchedule)
-          console.log(await weekScheduleRepository.get(week - 1))
+            await weekScheduleRepository.save(weeklyMassSchedule)
     }
 
     function rerender(){
@@ -58,11 +56,18 @@ export function BuildWeeklySchedule() {
 
     useEffect(() => {
         const getPlannedMasses = async () => {
-            let plannedMasses = await plannedMassGateway.getAll();
-            setWeeklyMassSchedule(WeeklyMassSchedule.create(datesMonth.getWeek(week), plannedMasses));
+            //ver se já tem agendamentos persistidos para a semana. faz um get com id da semana.
+            const weeklySchedule = await weekScheduleRepository.get(week);
+            if(weeklySchedule){
+                setWeeklyMassSchedule(weeklySchedule)
+            }
+            else{
+                //cria um weeklyMassSchedule do zero.
+                let plannedMasses = await plannedMassGateway.getAll();
+                setWeeklyMassSchedule(WeeklyMassSchedule.create(datesMonth.getWeek(week), plannedMasses));
+            }
         }
         getPlannedMasses();
-        //ver se já tem agendamentos persistidos para a semana. faz um get com id da semana.
     }, [week]);
 
 

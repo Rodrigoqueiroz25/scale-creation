@@ -21,6 +21,10 @@ export default class DateCustom {
         this.dayWeek = this.genDayWeek(this.dayWeekId);
     }
 
+    public static create(day: number, month: number, year: number): DateCustom {
+        return new DateCustom(day, month, year);
+    }
+
     public getMonth(): number {
         return this.month;
     }
@@ -68,5 +72,15 @@ export default class DateCustom {
         ];
         return days[id];
     }
+    //
+    // private static isDateCustom(obj: unknown): obj is { day: number, month: number, year: number } {
+    //     return (
+    //         typeof obj === "object" &&
+    //         obj !== null &&
+    //         "day" in obj &&
+    //         "month" in obj &&
+    //         "year" in obj
+    //     );
+    // }
 
 }

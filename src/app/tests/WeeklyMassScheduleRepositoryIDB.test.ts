@@ -2,6 +2,7 @@ import WeeklyMassSchedule from "../domain/entities/WeeklyMassSchedule";
 import Mass from "../domain/entities/Mass";
 import DateCustom from "../domain/entities/DateCustom";
 import WeeklyMassScheduleRepositoryIDB from "../infra/repositories/WeeklyMassScheduleRepositoryIDB";
+import * as inspector from "node:inspector";
 
 describe("test", () => {
 
@@ -45,7 +46,13 @@ describe("test", () => {
     describe("get", () => {
 
         it("get with success", async () => {
-            idbAdapterMock.get.mockResolvedValue(weekSchedule);
+            let weekSchedulee: WeeklyMassSchedule;
+            let mass = Mass.create(new DateCustom(1, 1, 2025), "19:00", "Igreja", "Missa", 8);
+            mass.assignAltarServer({id: 1, name: "jose"}, 1);
+
+            weekSchedulee = new WeeklyMassSchedule([mass], 1);
+
+            idbAdapterMock.get.mockResolvedValue(weekSchedulee);
             const result = await repository.get(1);
             expect(idbAdapterMock.get).toHaveBeenCalledWith(1);
             expect(result).toEqual(weekSchedule);

@@ -8,7 +8,7 @@ describe('IndexedDBAdapterNative', () => {
         name: string;
     }
 
-    let adapter: IndexedDBAdapterNative<T>;
+    let adapter: IndexedDBAdapterNative;
     
    // Mock do IDBDatabase
     const mockDB = {

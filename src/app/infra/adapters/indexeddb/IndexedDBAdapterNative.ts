@@ -1,7 +1,7 @@
 import IndexedDBAdapter from "./IndexedDBAdapter";
 
 
-export default class IndexedDBAdapterNative<T> implements IndexedDBAdapter<T> {
+export default class IndexedDBAdapterNative implements IndexedDBAdapter {
 
     private db: IDBDatabase | null = null;
 
@@ -31,19 +31,19 @@ export default class IndexedDBAdapterNative<T> implements IndexedDBAdapter<T> {
         });
     }
 
-    public async get(id: number): Promise<T> {
+    public async get(id: number): Promise<any> {
         let store = await this.getObjectStore('readonly');
-        return this.storeOperation<T>(store, (store) => store.get(id));
+        return this.storeOperation(store, (store) => store.get(id));
     }
 
-    public async put(data: T): Promise<void> {
+    public async put(data: any): Promise<void> {
         let store = await this.getObjectStore('readwrite');
-        return this.storeOperation<void>(store, (store) => store.put(data));
+        return this.storeOperation(store, (store) => store.put(data));
     }
 
 
-    private storeOperation<R>(store: IDBObjectStore, operation: (store: IDBObjectStore) => IDBRequest): Promise<R>{
-        return new Promise<R>((resolve, reject) => {
+    private storeOperation(store: IDBObjectStore, operation: (store: IDBObjectStore) => IDBRequest): Promise<any>{
+        return new Promise((resolve, reject) => {
             const request = operation(store);
             request.onsuccess = (event: any) => {
                 this.closeConnection();
