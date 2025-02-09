@@ -24,9 +24,6 @@ export function Selector({id, options, onHandleSelector, optPreSelected}: Props)
             setOptionSelected(optPreSelected);
     }, [optPreSelected]);
 
-    useEffect(() => {
-        setOptionSelected(undefined);
-    }, []);
 
     return (
         <div className={styles.container}>

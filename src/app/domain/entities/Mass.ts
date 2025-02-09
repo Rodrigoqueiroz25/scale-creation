@@ -1,6 +1,7 @@
 import DateCustom from "./DateCustom";
 import {Option} from "../../../@types/option";
 import {AltarServerRecord} from "./AltarServerRecord";
+import MassDTO from "../../application/dto/MassDTO";
 
 export type DateTimeLocal = {
     date: DateCustom,
@@ -8,22 +9,25 @@ export type DateTimeLocal = {
     local: string
 }
 
-export default class Mass {
 
-    private altarServers: AltarServerRecord;
+export default class Mass {
 
     constructor(
         private readonly date: DateCustom,
         private readonly time: string,
         private readonly local: string,
         private description: string,
-        private numVacancies: number
+        private numVacancies: number,
+        private altarServers: AltarServerRecord
     ) {
-        this.altarServers = new AltarServerRecord();
     }
 
     public static create(date: DateCustom, time: string, local: string, description: string, numVacancies: number): Mass {
-        return new Mass(date, time, local, description, numVacancies);
+        return new Mass(date, time, local, description, numVacancies, AltarServerRecord.create());
+    }
+
+    public static restore(date: DateCustom, time: string, local: string, description: string, numVacancies: number, altarServers: AltarServerRecord): Mass {
+        return new Mass(date, time, local, description, numVacancies, altarServers);
     }
 
     public setDescription(description: string) {
@@ -43,6 +47,11 @@ export default class Mass {
     public getAllAltarServers(): Option[] {
         return this.altarServers.getAll();
     }
+
+    public getAltarServers(): AltarServerRecord {
+        return this.altarServers;
+    }
+
 
     public getAltarServer(idSlot: number): Option | undefined {
         return this.altarServers.get(idSlot);

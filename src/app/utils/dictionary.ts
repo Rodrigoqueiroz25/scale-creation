@@ -3,8 +3,8 @@ export class Dictionary<K extends string | number | symbol, V> {
 
     private readonly data: Record<K, V>;
 
-    constructor() {
-        this.data = {} as Record<K, V>;
+    constructor(obj: unknown) {
+        this.data = obj as Record<K, V>;
     }
 
     public getKeys(): K[] {

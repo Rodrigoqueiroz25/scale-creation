@@ -494,3 +494,35 @@ mas o q foi selecionado quando avanço e volto não aparece selecionado o que fo
 para isso eu preciso salvar o conteúdo? sim.
 
 vamos criar uma classe repository para usar o indexedDB. o que irei armazenar? o weeklyMassSchedule.
+
+ta funcionando. preciso agora recuperar os arquivos salvos.
+
+
+
+................................
+
+eu to refazendo o método restore de cada entity para apenas receber os dados que precisa.
+
+to fazendo Mappers para converter entre DTO e Entity e vice-versa.
+
+funcionou.
+
+____________________
+como as coisas estão acontecendo?
+
+o calendário do mês é criado,
+o planejamento semanal de missas é obtido,
+a lista de altar servers é obtida,
+
+o agendamento semanal é criado usando o calendário e o planejamento.
+o serviço de lista de altar servers é criado usando a lista e o agendamento.
+o use case que faz a alocação de altar server é criado usando o agendamento.
+
+
+
+
+
+
+
+
+
