@@ -24,7 +24,7 @@
     "src"
   ],
   "exclude": [
-    "exclude"
+    "exclude", "src/app/tests"
   ]
   
 }

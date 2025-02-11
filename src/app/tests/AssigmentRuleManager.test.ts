@@ -6,20 +6,20 @@ import MonthFactory from "../domain/factories/MonthFactory";
 import {NameMonths} from "../shared/enums/NameMonths.enum";
 import Month from "../domain/entities/Month";
 import DateCustom from "../domain/entities/DateCustom";
-import AssignmentRuleManager from "../domain/rules/altar-server-assignment/AssignmentRuleManager";
+import AltarServerAssignmentRuleFactory from "../domain/factories/AltarServerAssignmentRuleFactory";
 import Mass from "../domain/entities/Mass";
 import SundayAssigmentRule from "../domain/rules/altar-server-assignment/SundayAssigmentRule";
 
 describe("WeekDayAssigmentRules", () => {
 
     let weeklyMassSchedule: WeeklyMassSchedule;
-    let assigmnetRuleManager: AssignmentRuleManager;
+    let assigmnetRuleManager: AltarServerAssignmentRuleFactory;
     let datesMonth: Month;
 
     beforeEach(() => {
         datesMonth = MonthFactory.create(NameMonths.JANEIRO, new Date().getFullYear());
         weeklyMassSchedule = WeeklyMassSchedule.create(datesMonth.getWeek(2), plannedMasses);
-        assigmnetRuleManager = new AssignmentRuleManager(weeklyMassSchedule);
+        assigmnetRuleManager = new AltarServerAssignmentRuleFactory(weeklyMassSchedule);
     })
 
     test("retorna objeto do tipo SundayAssigmentRule quando a missa é dominical", () => {

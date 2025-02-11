@@ -1,7 +1,6 @@
 import DateCustom from "./DateCustom";
 import {Option} from "../../../@types/option";
 import {AltarServerRecord} from "./AltarServerRecord";
-import MassDTO from "../../application/dto/MassDTO";
 
 export type DateTimeLocal = {
     date: DateCustom,
@@ -33,7 +32,6 @@ export default class Mass {
     public setDescription(description: string) {
         this.description = description;
     }
-
 
     public assignAltarServer(altarServer: Option, idSlot: number) {
         if(!this.isAltarServerAssign(altarServer.id))

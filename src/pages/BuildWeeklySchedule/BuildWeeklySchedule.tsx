@@ -8,7 +8,6 @@ import PlannedMassGateway from "../../app/infra/gateways/plannedMass/PlannedMass
 import {plannedMasses} from "../../app/shared/data/plannedMassesParish";
 import {MassForm} from "./components/MassForm/MassForm";
 import WeeklyMassSchedule from "../../app/domain/entities/WeeklyMassSchedule";
-import WeeklyAltarServerMassAssignmentManager from "../../app/application/usecases/WeeklyAltarServerMassAssignmentManager";
 import AltarServerList from "../../app/application/services/AltarServerList";
 import AltarServersGateway from "../../app/infra/gateways/altarServers/AltarServersGateway";
 import AltarServersGatewayMemory from "../../app/infra/gateways/altarServers/AltarServersGatewayMemory";
@@ -16,6 +15,7 @@ import {altarServersParoch} from "../../app/shared/data/altarServers";
 import WeeklyMassScheduleRepositoryIDB from "../../app/infra/repositories/WeeklyMassScheduleRepositoryIDB";
 import IndexedDBAdapter from "../../app/infra/adapters/indexeddb/IndexedDBAdapter";
 import IndexedDBAdapterNative from "../../app/infra/adapters/indexeddb/IndexedDBAdapterNative";
+import WeeklyMassScheduleRepository from "../../app/infra/repositories/WeeklyMassScheduleRepository";
 
 
 export function BuildWeeklySchedule() {
@@ -25,13 +25,13 @@ export function BuildWeeklySchedule() {
     const plannedMassGateway: PlannedMassGateway = new PlannedMassGatewayMemory(plannedMasses);
     const altarServersGateway: AltarServersGateway = new AltarServersGatewayMemory(altarServersParoch);
     const indexedDBAdapter: IndexedDBAdapter = new IndexedDBAdapterNative("dbSchedules", 1, "schedules");
-    const weekScheduleRepository: WeeklyMassScheduleRepositoryIDB = new WeeklyMassScheduleRepositoryIDB(indexedDBAdapter);
+    const weekScheduleRepository: WeeklyMassScheduleRepository = new WeeklyMassScheduleRepositoryIDB(indexedDBAdapter);
 
     const [week, setWeek] = useState(1);
     const [renderr, setRenderr] = useState(true);
     const [weeklyMassSchedule, setWeeklyMassSchedule] = useState<WeeklyMassSchedule>();
-    const [altarServerMassAssignmentManager, setAltarServerMassAssignmentManager] = useState<WeeklyAltarServerMassAssignmentManager>({} as WeeklyAltarServerMassAssignmentManager);
     const [altarServerList, setAltarServerList] = useState<AltarServerList>();
+
 
     async function handleClickNextWeek() {
         if (week < datesMonth.totalWeeks) {
@@ -54,33 +54,27 @@ export function BuildWeeklySchedule() {
     }
 
 
-    useEffect(() => {
-        const getPlannedMasses = async () => {
-            //ver se já tem agendamentos persistidos para a semana. faz um get com id da semana.
-            const weeklySchedule = await weekScheduleRepository.get(week);
-            if(weeklySchedule){
-                setWeeklyMassSchedule(weeklySchedule)
-            }
-            else{
-                //cria um weeklyMassSchedule do zero.
-                let plannedMasses = await plannedMassGateway.getAll();
-                setWeeklyMassSchedule(WeeklyMassSchedule.create(datesMonth.getWeek(week), plannedMasses));
-            }
+    async function configure(weeklyScheduleMass: WeeklyMassSchedule) {
+        setWeeklyMassSchedule(weeklyScheduleMass);
+        let altarServers = await altarServersGateway.getAll();
+        setAltarServerList(new AltarServerList(altarServers, weeklyScheduleMass));
+    }
+
+    const setAllStates = async () => {
+        const weeklyScheduleGetted = await weekScheduleRepository.get(week);
+        if(weeklyScheduleGetted){
+            configure(weeklyScheduleGetted);
         }
-        getPlannedMasses();
+        else{
+            let plannedMasses = await plannedMassGateway.getAll();
+            let weeklyMassSchedule = WeeklyMassSchedule.create(datesMonth.getWeek(week), plannedMasses);
+            configure(weeklyMassSchedule);
+        }
+    }
+
+    useEffect(() => {
+        setAllStates();
     }, [week]);
-
-
-    useEffect(() => {
-        const getAltarServers = async (schedule: WeeklyMassSchedule) => {
-            let altarServers = await altarServersGateway.getAll();
-            setAltarServerList(new AltarServerList(altarServers, schedule));
-        }
-        if(weeklyMassSchedule){
-            getAltarServers(weeklyMassSchedule);
-            setAltarServerMassAssignmentManager(new WeeklyAltarServerMassAssignmentManager(weeklyMassSchedule));
-        }
-    }, [weeklyMassSchedule]);
 
 
     return (
@@ -89,13 +83,13 @@ export function BuildWeeklySchedule() {
             <h2 className={styles.semana}>{week}º Semana</h2>
             {
                 weeklyMassSchedule && altarServerList ?
-                    weeklyMassSchedule.getSchedule().map((mass) => (
+                    weeklyMassSchedule.getScheduledMasses().map((mass) => (
                         <MassForm
                             func={rerender}
                             key={mass.id}
                             mass={mass}
-                            altarServerMassAssignment={altarServerMassAssignmentManager}
-                            altarServerList={altarServerList.getList(mass)}
+                            altarServerAssignment={weeklyMassSchedule}
+                            altarServerList={altarServerList.getList(mass.getDate())}
                         />
                     )) : null
             }
