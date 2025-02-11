@@ -7,7 +7,7 @@ export default class WeeklyMassScheduleMapper {
     public static toDTO(weekSchedule: WeeklyMassSchedule): WeeklyMassScheduleDTO {
         return {
             id: weekSchedule.getId(),
-            masses: weekSchedule.getSchedule().map(mass  => MassMapper.toDTO(mass)),
+            masses: weekSchedule.getScheduledMasses().map(mass  => MassMapper.toDTO(mass)),
         }
     }
 

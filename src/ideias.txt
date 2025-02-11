@@ -521,8 +521,37 @@ o use case que faz a alocação de altar server é criado usando o agendamento.
 
 
 
+________________________
+tava pensando se o weeklyMassSchedule poderia armazenar como propriedade o assigmentRuleManager
+
+weeklyMassSchedule tem a responsabilidade de armazenar a agenda de missas e tem métodos para gerenciar a agenda.
+ela poderia armazenar o gerenciador de regras?
+
+essas regras dizem respeito a adicionar altar servers em uma missa. mas a regra leva em consideração o agendamento.
+parece fazer sentido.
 
 
+AssigmentRuleManager é uma fábrica e pode ser estática. mas tem o teste tb.
 
 
+12_________
+tem nomes que podem ser escalados mais de uma vez.
 
+a regra de apenas uma vez na semana, ta um pouco flexibilizada devido ao numero reduzido de pessoas e por alguns nao irem na semana.
+
+tenho q flexibilizar a regra depois.
+
+talvez colocar um numero maximo de vezes que a pessoa pode ser escalada nos dias da semana.
+
+....outra coisa que precisa ter é a disponibilidade.
+
+DISPONIBILIDADE seria como uma regra para permitir ou não alocação do coroinha em determinados dias da semana.
+
+cada altar server deve conter a informação de sua disponibilidade.
+
+uma branch.
+
+13____
+eu somente to salvando quando avanço ou retrocedo a semana. caso haja algum problema, eu perco o progresso.
+
+como seria salvar logo quando seleciono? uma branch so pra ver isso.

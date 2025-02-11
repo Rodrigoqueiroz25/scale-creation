@@ -1,22 +1,18 @@
+
 import {Option} from "../../../@types/option";
-import WeeklyMassSchedule from "../../domain/entities/WeeklyMassSchedule";
-import Mass from "../../domain/entities/Mass";
-import AssignmentRuleManager from "../../domain/rules/altar-server-assignment/AssignmentRuleManager";
+import DateCustom from "../../domain/entities/DateCustom";
+import IAltarServerQueryAssignment from "../../domain/interfaces/IAltarServerQueryAssignment";
 
 export default class AltarServerList {
 
-    private assignmentManager: AssignmentRuleManager;
-
     constructor(
         private readonly altarServers: Option[],
-        private readonly weeklyMassSchedule: WeeklyMassSchedule
+        private readonly altarServerQueryAssignment: IAltarServerQueryAssignment
     ) {
-        this.assignmentManager = new AssignmentRuleManager(weeklyMassSchedule);
     }
 
-    public getList(mass: Mass): Option[] {
-        const assignmentRule = this.assignmentManager.getRule(mass);
-        return this.altarServers.filter(altarServer => assignmentRule.canAssign(altarServer));
+    public getList(date: DateCustom): Option[] {
+        return this.altarServers.filter(altarServer => this.altarServerQueryAssignment.canAssignAltarServer(date, altarServer));
     }
 
 

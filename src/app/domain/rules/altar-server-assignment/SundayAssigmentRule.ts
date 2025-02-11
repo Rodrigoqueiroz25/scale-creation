@@ -1,18 +1,13 @@
 import AltarServerAssignmentRule from "./AltarServerAssignmentRule";
 import {Option} from "../../../../@types/option";
-import WeeklyMassSchedule from "../../entities/WeeklyMassSchedule";
 import {DaysWeek} from "../../../shared/enums/DaysWeek.enum";
+import IWeeklySchedule from "../../interfaces/IWeeklySchedule";
 
 export default class SundayAssigmentRule implements AltarServerAssignmentRule {
 
-    constructor(private readonly weeklyMassSchedule: WeeklyMassSchedule) {
-    }
-
-    public canAssign(altarServer: Option): boolean {
-        return this.weeklyMassSchedule.getMassesByDay(DaysWeek.DOMINGO).every(
+    public canAssign(altarServer: Option, weeklySchedule: IWeeklySchedule): boolean {
+        return weeklySchedule.getMassesByDay(DaysWeek.DOMINGO).every(
             mass => !mass.isAltarServerAssign(altarServer.id)
         )
     }
 }
-
-//se for domingo e não tiver selecionando em nenhuma missa dominical.

@@ -2,18 +2,17 @@ import {useState} from 'react';
 import styles from './style.module.css';
 import Mass from "../../../../app/domain/entities/Mass";
 import {Selector} from "../../../../components/Selector/Selector";
-
-import WeeklyAltarServerMassAssignmentManager from "../../../../app/application/usecases/WeeklyAltarServerMassAssignmentManager";
 import {Option} from "../../../../@types/option";
+import IAltarServerAssignment from "../../../../app/domain/interfaces/IAltarServerAssignment";
 
 type Props = {
     mass: Mass;
-    altarServerMassAssignment: WeeklyAltarServerMassAssignmentManager;
+    altarServerAssignment: IAltarServerAssignment;
     altarServerList: Option[];
     func: () => void;
 }
 
-export function MassForm({mass, altarServerMassAssignment, altarServerList, func}: Props) {
+export function MassForm({mass, altarServerAssignment, altarServerList, func}: Props) {
 
     const [celebration, setCelebration] = useState(mass.getDescription());
     const [vacancies, setVacancies] = useState<number>(mass.getNumVacancies());
@@ -30,10 +29,10 @@ export function MassForm({mass, altarServerMassAssignment, altarServerList, func
     
     function altarServerChosen(id: number, newOption: Option, oldOption?: Option) {
         if(oldOption) {
-            altarServerMassAssignment.unassignFromMass(id, mass.getDateTimeLocal());
+            altarServerAssignment.unassignAltarServer(id, mass.getDateTimeLocal());
         }
         if (newOption)
-            altarServerMassAssignment.assignToMass(newOption, id, mass.getDateTimeLocal());
+            altarServerAssignment.assignAltarServer(newOption, id, mass.getDateTimeLocal());
         func()
     }
 
