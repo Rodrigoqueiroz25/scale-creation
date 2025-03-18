@@ -11,6 +11,9 @@
       <excludeFolder url="file://$MODULE_DIR$/.devbox/virtenv" />
       <excludeFolder url="file://$MODULE_DIR$/coverage" />
       <excludeFolder url="file://$MODULE_DIR$/exclude" />
+      <excludeFolder url="file://$MODULE_DIR$/.devbox" />
+      <excludeFolder url="file://$MODULE_DIR$/.husky" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
