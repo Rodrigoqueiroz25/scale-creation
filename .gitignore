@@ -1,5 +1,7 @@
-src/dados.txt
-src/ideias.txt
+.idea
+.devbox
+dados.txt
+ideias.txt
 # data
 exclude
 # Logs
